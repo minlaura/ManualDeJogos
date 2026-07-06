@@ -38,6 +38,6 @@ public class DLC extends ProdutoDigital {
 
     @Override
     public String toString() {
-        return super.toString() + "\nmanualdejogos.model.Jogo Base: " + getJogoBase().getNome() + "\nTamanho: " + getTamanhoGB();
+        return super.toString() + "\nJogo Base: " + getJogoBase().getNome() + "\nTamanho: " + getTamanhoGB();
     }
 }

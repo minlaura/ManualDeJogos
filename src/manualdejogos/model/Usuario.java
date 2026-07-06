@@ -95,7 +95,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "manualdejogos.model.Usuario{" + " \nNome ='" + nome + '\'' + ", \nIdade =" + idade + ",\nSaldo da Conta =" + String.format("%.2f", saldo) + '}';
+        return "Usuario {" + " \nNome ='" + nome + '\'' + ", \nIdade =" + idade + ",\nSaldo da Conta =" + String.format("%.2f", saldo) + '}';
     }
 }
 
