@@ -1,5 +1,13 @@
 package manualdejogos.model;
 
+/**
+ * Representa um conteúdo adicional (DLC)
+ * pertencente a um jogo base.
+ *
+ * A DLC depende da existência do jogo base
+ * e utiliza metade da taxa de desconto dele
+ * para calcular seu preço final.
+ */
 public class DLC extends ProdutoDigital {
     private Jogo jogoBase;
     private double tamanhoGB;
@@ -28,6 +36,13 @@ public class DLC extends ProdutoDigital {
         this.tamanhoGB = tamanhoGB;
     }
 
+
+    /**
+     * Calcula o preço final da DLC utilizando
+     * metade da taxa de desconto do jogo base.
+     *
+     * @return preço final da DLC.
+     */
     @Override
     public double calcularPrecoFinal() {
         double descontoDlc = jogoBase.getTaxaDesconto() / 2;

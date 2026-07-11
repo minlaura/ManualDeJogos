@@ -1,5 +1,11 @@
 package manualdejogos.model;
 
+/**
+ * Além das informações herdades de ProdutoDigital,
+ * possui classificação de indicativa, gênero e +.
+ *
+ *
+ */
 public class Jogo extends ProdutoDigital {
     private int idadeRecomendada;
     private Genero genero;
@@ -48,6 +54,11 @@ public class Jogo extends ProdutoDigital {
         this.taxaDesconto = taxaDesconto;
     }
 
+    /**
+     * Calcula o preço final aplicando a taxa de desconto definida para o próprio jogo.
+     *
+     * @return preço final do jogo
+     */
     @Override
 
     public double calcularPrecoFinal() {

@@ -7,6 +7,17 @@ import manualdejogos.exception.SaldoInsuficienteException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representa um usuário da plataforma.
+ *
+ * Um usuário possui informações pessoais,
+ * saldo disponível e uma biblioteca de
+ * produtos adquiridos.
+ *
+ * Também é responsável por realizar compras
+ * e gerenciar sua biblioteca.
+ */
+
 public class Usuario {
     private String nome;
     private int idade;
@@ -55,10 +66,27 @@ public class Usuario {
         saldo = saldo + valor;
 
     }
+    /**
+     * Verifica se o usuário possui um produto
+     * em sua biblioteca.
+     *
+     * @param produto produto a ser verificado.
+     * @return true se o produto estiver na biblioteca.
+     */
 
     public boolean possuiProduto(ProdutoDigital produto) {
         return biblioteca.contains(produto);
     }
+
+
+    /**
+     * Realiza a compra de um produto digital.
+     *
+     * @param produto produto a ser adquirido.
+     * @throws IdadeInsuficienteException se o usuário não possuir idade suficiente.
+     * @throws JogoBaseNaoEncontradoException se a DLC for adquirida sem o jogo base.
+     * @throws SaldoInsuficienteException se o saldo for insuficiente.
+     */
 
     public void comprar(ProdutoDigital produto) throws IdadeInsuficienteException, JogoBaseNaoEncontradoException, SaldoInsuficienteException {
 
