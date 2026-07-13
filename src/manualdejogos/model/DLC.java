@@ -13,7 +13,7 @@ public class DLC extends ProdutoDigital {
     private double tamanhoGB;
 
 
-    public DLC(String nome, double precoBase, int id, Jogo jogoBase, double tamanhoGB, double descontoSePossuiJogo) {
+    public DLC(String nome, double precoBase, int id, Jogo jogoBase, double tamanhoGB) {
         super(nome, precoBase, id);
         this.jogoBase = jogoBase;
         this.tamanhoGB = tamanhoGB;

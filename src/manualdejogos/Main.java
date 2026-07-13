@@ -1,9 +1,10 @@
 package manualdejogos;
 
-import manualdejogos.model.Usuario;
-import manualdejogos.model.Jogo;
 import manualdejogos.model.DLC;
 import manualdejogos.model.Genero;
+import manualdejogos.model.Jogo;
+import manualdejogos.model.Loja;
+import manualdejogos.model.Usuario;
 
 import java.util.Locale;
 
@@ -11,11 +12,13 @@ public class Main {
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
 
+        // USUÁRIOS
         Usuario usuarioComum = new Usuario("Minus", 19, 500.0);
         Usuario usuarioMenor = new Usuario("Pedro", 10, 500.0);
         Usuario usuarioSemSaldo = new Usuario("Paulo", 18, 0.0);
         Usuario usuarioNovo = new Usuario("Ana", 20, 500.0);
 
+        // PRODUTOS
         Jogo minecraft = new Jogo(
                 "Minecraft", 100.0, 1, 10, Genero.AVENTURA, true, 20
         );
@@ -25,60 +28,73 @@ public class Main {
         );
 
         DLC liberty = new DLC(
-                "Phantom Liberty", 70.0, 3, cyberpunk, 70.0, 20
+                "Phantom Liberty", 70.0, 3, cyberpunk, 70.0
         );
 
-        System.out.println("PRODUTOS \n");
-        System.out.println(minecraft);
-        System.out.println();
-        System.out.println(cyberpunk);
-        System.out.println();
-        System.out.println(liberty);
+        // BUSCAR POR ID - CLASSE LOJA
+        Loja loja = new Loja("Petech", "000000.0");
+        loja.adicionarProduto(minecraft);
+        loja.adicionarProduto(cyberpunk);
+        loja.adicionarProduto(liberty);
 
-        System.out.println("\nUSUÁRIO \n");
+        System.out.println("- JOGOS DISPONÍVEIS: CATÁLOGO -");
+        loja.mostrarCatalogo();
+
+        System.out.println("\nBUSCA POR ID!\n");
+        System.out.println(loja.buscarPorId(1));
+
+        System.out.println("\nUSUÁRIO\n");
         System.out.println(usuarioComum);
 
-        System.out.println("\nCOMPRA \n");
+        System.out.println("\nCOMPRA\n");
+
         try {
-            usuarioComum.comprar(cyberpunk);
+            loja.vender(usuarioComum, 2);
             System.out.println("Cyberpunk comprado com sucesso!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         try {
-            usuarioComum.comprar(liberty);
+            loja.vender(usuarioComum, 3);
             System.out.println("DLC comprada com sucesso!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("\nDADOS DO USUÁRIO \n");
+        System.out.println("\nDADOS DO USUÁRIO\n");
         System.out.println(usuarioComum);
 
-        System.out.println("\nBIBLIOTECA \n");
+        System.out.println("\nBIBLIOTECA\n");
         usuarioComum.mostrarBiblioteca();
 
-        System.out.println("\nTESTE: IDADE \n");
+        System.out.println("\nTESTE: IDADE\n");
         try {
-            usuarioMenor.comprar(cyberpunk);
+            loja.vender(usuarioMenor, 2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         System.out.println("\nTESTE: SALDO\n");
         try {
-            usuarioSemSaldo.comprar(minecraft);
+            loja.vender(usuarioSemSaldo, 1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         System.out.println("\nTESTE: DLC SEM JOGO BASE\n");
         try {
-            usuarioNovo.comprar(liberty);
+            loja.vender(usuarioNovo, 3);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+        System.out.println("\nTESTE: ID NÃO ENCONTRADO\n");
+        try {
+            loja.vender(usuarioComum, 5);
+            System.out.println("Compra realizada!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
