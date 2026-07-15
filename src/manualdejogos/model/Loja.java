@@ -48,6 +48,11 @@ public class Loja {
         catalogo.add(produto);
     }
 
+    public void removerProduto(String nome){
+        ProdutoDigital produto = buscarPorNome(nome);
+        catalogo.remove(produto);
+    }
+
 
     public ProdutoDigital buscarPorId(int id) throws ProdutoNaoEncontradoException {
         for (ProdutoDigital produtoPorID : catalogo) {
@@ -62,7 +67,7 @@ public class Loja {
     public ProdutoDigital buscarPorNome(String nome) throws ProdutoNaoEncontradoException {
         for (ProdutoDigital produto : catalogo) {
 
-            if (produto.getNome().equals(nome)) {
+            if (produto.getNome().equalsIgnoreCase(nome)) {
                 return produto;
             }
 

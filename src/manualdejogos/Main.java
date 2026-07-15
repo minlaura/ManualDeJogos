@@ -24,6 +24,8 @@ public class Main {
                 "Cyberpunk 2077", 200.0, 2, 18, Genero.ACAO, false, 25
         );
 
+        Jogo mario = new Jogo("Mario Party", 50.0, 5, 5, Genero.AVENTURA, true, 5);
+
         DLC liberty = new DLC(
                 "Phantom Liberty", 70.0, 3, cyberpunk, 70.0
         );
@@ -33,9 +35,20 @@ public class Main {
         loja.adicionarProduto(minecraft);
         loja.adicionarProduto(cyberpunk);
         loja.adicionarProduto(liberty);
+        loja.adicionarProduto(mario);
+
 
         System.out.println("- JOGOS DISPONÍVEIS: CATÁLOGO -");
         loja.mostrarCatalogo();
+
+        // REMOVER PRODUTO DO CATALOGO
+        System.out.println("- REMOÇÃO DE PRODUTOS");
+        try {
+            loja.removerProduto("Mario Party");
+            System.out.println("Produto removido com sucesso!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("\nBUSCA POR ID!\n");
         System.out.println(loja.buscarPorId(1));
@@ -58,6 +71,7 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
 
         System.out.println("\nDADOS DO USUÁRIO\n");
         System.out.println(usuarioComum);
@@ -103,9 +117,8 @@ public class Main {
         }
 
 
-        // NOME DE PRODUTO EXISTENTE
+        // NOME DE PRODUTO
         System.out.println("\nBUSCA POR NOME");
-        System.out.println(loja.buscarPorNome("Minecraft"));
 
         //PRODUTO NÃO ENCONTRADO
 
@@ -113,6 +126,8 @@ public class Main {
             System.out.println(loja.buscarPorNome("GTA VI"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
+
         }
+
     }
 }
