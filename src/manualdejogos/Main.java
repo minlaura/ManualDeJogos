@@ -1,11 +1,8 @@
 package manualdejogos;
 
-import manualdejogos.model.DLC;
-import manualdejogos.model.Genero;
-import manualdejogos.model.Jogo;
-import manualdejogos.model.Loja;
-import manualdejogos.model.Usuario;
+import manualdejogos.model.*;
 
+import java.util.List;
 import java.util.Locale;
 
 public class Main {
@@ -93,6 +90,27 @@ public class Main {
         try {
             loja.vender(usuarioComum, 5);
             System.out.println("Compra realizada!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("\nPRODUTOS DE AVENTURA\n");
+
+        List<ProdutoDigital> produtos = loja.buscarPorGenero(Genero.AVENTURA);
+
+        for (ProdutoDigital produto : produtos) {
+            System.out.println(produto);
+        }
+
+
+        // NOME DE PRODUTO EXISTENTE
+        System.out.println("\nBUSCA POR NOME");
+        System.out.println(loja.buscarPorNome("Minecraft"));
+
+        //PRODUTO NÃO ENCONTRADO
+
+        try {
+            System.out.println(loja.buscarPorNome("GTA VI"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

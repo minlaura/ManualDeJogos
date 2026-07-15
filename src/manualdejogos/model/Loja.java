@@ -59,6 +59,19 @@ public class Loja {
 
     }
 
+    public ProdutoDigital buscarPorNome(String nome) throws ProdutoNaoEncontradoException {
+        for (ProdutoDigital produto : catalogo) {
+
+            if (produto.getNome().equals(nome)) {
+                return produto;
+            }
+
+        }
+
+        throw new ProdutoNaoEncontradoException();
+
+    }
+
     public void vender(Usuario usuario, int id) throws SaldoInsuficienteException, IdadeInsuficienteException, JogoBaseNaoEncontradoException {
         ProdutoDigital produto = buscarPorId(id);
         usuario.comprar(produto);
@@ -69,5 +82,21 @@ public class Loja {
             System.out.println(produto);
 
         }
+    }
+
+    public List<ProdutoDigital> buscarPorGenero(Genero genero) {
+
+        List<ProdutoDigital> produtosPorGenero = new ArrayList<>();
+
+        for (ProdutoDigital produto : catalogo) {
+            if (produto instanceof Jogo jogo) {
+                if (jogo.getGenero() == genero) {
+                    produtosPorGenero.add(produto);
+                }
+
+            }
+        }
+        return produtosPorGenero;
+
     }
 }
