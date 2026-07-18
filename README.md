@@ -4,7 +4,7 @@
 
 ## Sobre o projeto
 
-O **Manual de Jogos** simula o funcionamento de uma plataforma de distribuição de jogos digitais, inspirada em serviços como Steam e Epic Games.
+O **Manual de Jogos** simula o funcionamento de uma plataforma de distribuição de jogos digitais. 
 
 O sistema permite cadastrar jogos e DLCs, gerenciar usuários, realizar compras e controlar regras de negócio, como idade mínima, saldo disponível e dependência entre jogos e DLCs.
 
