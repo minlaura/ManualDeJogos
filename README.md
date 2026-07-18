@@ -2,7 +2,7 @@
 
 > Plataforma digital desenvolvida em **Java** utilizando **Programação Orientada a Objetos (POO)** para simular a compra e o gerenciamento de jogos digitais.
 
-## 📖 Sobre o projeto
+## Sobre o projeto
 
 O **Manual de Jogos** simula o funcionamento de uma plataforma de distribuição de jogos digitais, inspirada em serviços como Steam e Epic Games.
 
@@ -12,7 +12,7 @@ O objetivo do projeto é aplicar conceitos fundamentais de **Programação Orien
 
 ---
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
 ### 👤 Usuários
 
@@ -107,7 +107,7 @@ manualdejogos
 
 ---
 
-## 📌 Funcionalidades implementadas
+## Funcionalidades implementadas
 
 - [x] Sistema de usuários
 - [x] Sistema de compras
@@ -122,7 +122,7 @@ manualdejogos
 
 ---
 
-## 🔮 Melhorias futuras
+## Melhorias futuras
 
 - [ ] Buscar apenas jogos
 - [ ] Buscar apenas DLCs
@@ -133,8 +133,3 @@ manualdejogos
 - [ ] Sistema de login
 - [ ] Histórico de compras
 
----
-
-## 👩‍💻 Desenvolvido por
-
-Laura
