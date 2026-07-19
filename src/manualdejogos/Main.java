@@ -95,7 +95,7 @@ public class Main {
 
         System.out.println("\nTESTE: ID NÃO ENCONTRADO\n");
         try {
-            loja.vender(usuarioComum, 444);
+            loja.vender(usuarioComum, 44);
             System.out.println("Compra realizada!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
