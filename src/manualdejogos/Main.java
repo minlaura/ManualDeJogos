@@ -41,14 +41,7 @@ public class Main {
         System.out.println("- JOGOS DISPONÍVEIS: CATÁLOGO -");
         loja.mostrarCatalogo();
 
-        // REMOVER PRODUTO DO CATALOGO
-        System.out.println("- REMOÇÃO DE PRODUTOS");
-        try {
-            loja.removerProduto("Mario Party");
-            System.out.println("Produto removido com sucesso!");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+
 
         System.out.println("\nBUSCA POR ID!\n");
         System.out.println(loja.buscarPorId(1));
@@ -102,7 +95,7 @@ public class Main {
 
         System.out.println("\nTESTE: ID NÃO ENCONTRADO\n");
         try {
-            loja.vender(usuarioComum, 5);
+            loja.vender(usuarioComum, 444);
             System.out.println("Compra realizada!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -128,6 +121,19 @@ public class Main {
             System.out.println(e.getMessage());
 
         }
+
+
+        // REMOVER PRODUTO DO CATALOGO
+        System.out.println("\nREMOÇÃO DE PRODUTOS");
+        try {
+            loja.removerProduto("Mario Party");
+            System.out.println("Produto removido com sucesso!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("\nCATÁLOGO ATUALIZADO");
+        loja.mostrarCatalogo();
 
     }
 }

@@ -77,7 +77,7 @@ public class Loja {
 
     }
 
-    public void vender(Usuario usuario, int id) throws SaldoInsuficienteException, IdadeInsuficienteException, JogoBaseNaoEncontradoException {
+    public void vender(Usuario usuario, int id) throws SaldoInsuficienteException, IdadeInsuficienteException, JogoBaseNaoEncontradoException, ProdutoNaoEncontradoException {
         ProdutoDigital produto = buscarPorId(id);
         usuario.comprar(produto);
     }
