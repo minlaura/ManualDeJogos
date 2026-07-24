@@ -6,7 +6,13 @@ import java.util.List;
 import java.util.Locale;
 
 public class Main {
+
+    private static void titulo(String texto) {
+        System.out.println("\n• " + texto);
+    }
+
     public static void main(String[] args) {
+
         Locale.setDefault(Locale.US);
 
         // USUÁRIOS
@@ -17,39 +23,52 @@ public class Main {
 
         // PRODUTOS
         Jogo minecraft = new Jogo(
-                "Minecraft", 100.0, 1, 10, Genero.AVENTURA, true, 20
+                "Minecraft", 100.0, 1, 10,
+                Genero.AVENTURA, true, 20
         );
 
         Jogo cyberpunk = new Jogo(
-                "Cyberpunk 2077", 200.0, 2, 18, Genero.ACAO, false, 25
+                "Cyberpunk 2077", 200.0, 2, 18,
+                Genero.ACAO, false, 25
         );
 
-        Jogo mario = new Jogo("Mario Party", 50.0, 5, 5, Genero.AVENTURA, true, 5);
+        Jogo mario = new Jogo(
+                "Mario Party", 50.0, 5, 5,
+                Genero.AVENTURA, true, 5
+        );
 
         DLC liberty = new DLC(
-                "Phantom Liberty", 70.0, 3, cyberpunk, 70.0
+                "Phantom Liberty", 70.0, 3,
+                cyberpunk, 70.0
         );
 
-        // BUSCAR POR ID - CLASSE LOJA
+        // LOJA
         Loja loja = new Loja("Petech", "000000.0");
+
         loja.adicionarProduto(minecraft);
         loja.adicionarProduto(cyberpunk);
         loja.adicionarProduto(liberty);
         loja.adicionarProduto(mario);
 
-
-        System.out.println("- JOGOS DISPONÍVEIS: CATÁLOGO -");
+        // CATÁLOGO
+        titulo("Catálogo de Jogos");
         loja.mostrarCatalogo();
 
+        // BUSCA POR ID
+        titulo("Busca por ID");
 
+        try {
+            System.out.println(loja.buscarPorId(1));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        System.out.println("\nBUSCA POR ID!\n");
-        System.out.println(loja.buscarPorId(1));
-
-        System.out.println("\nUSUÁRIO\n");
+        // DADOS DO USUÁRIO
+        titulo("Dados do Usuário");
         System.out.println(usuarioComum);
 
-        System.out.println("\nCOMPRA\n");
+        // COMPRA DE JOGO
+        titulo("Compra de Jogo");
 
         try {
             loja.vender(usuarioComum, 2);
@@ -58,6 +77,9 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
+        // COMPRA DE DLC
+        titulo("Compra de DLC");
+
         try {
             loja.vender(usuarioComum, 3);
             System.out.println("DLC comprada com sucesso!");
@@ -65,35 +87,41 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-
-        System.out.println("\nDADOS DO USUÁRIO\n");
+        // DADOS APÓS AS COMPRAS
+        titulo("Dados Atualizados do Usuário");
         System.out.println(usuarioComum);
 
-        System.out.println("\nBIBLIOTECA\n");
+        // BIBLIOTECA
+        titulo("Biblioteca do Usuário");
         usuarioComum.mostrarBiblioteca();
 
-        System.out.println("\nTESTE: IDADE\n");
+        // TESTES
+        titulo("Teste - Idade Insuficiente");
+
         try {
             loja.vender(usuarioMenor, 2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("\nTESTE: SALDO\n");
+        titulo("Teste - Saldo Insuficiente");
+
         try {
             loja.vender(usuarioSemSaldo, 1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("\nTESTE: DLC SEM JOGO BASE\n");
+        titulo("Teste - DLC sem Jogo Base");
+
         try {
             loja.vender(usuarioNovo, 3);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("\nTESTE: ID NÃO ENCONTRADO\n");
+        titulo("Teste - Produto Não Encontrado");
+
         try {
             loja.vender(usuarioComum, 444);
             System.out.println("Compra realizada!");
@@ -101,30 +129,36 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("\nPRODUTOS DE AVENTURA\n");
+        // BUSCA POR GÊNERO
+        titulo("Produtos do Gênero Aventura");
 
-        List<ProdutoDigital> produtos = loja.buscarPorGenero(Genero.AVENTURA);
+        List<ProdutoDigital> produtosAventura = loja.buscarPorGenero(Genero.AVENTURA);
 
-        for (ProdutoDigital produto : produtos) {
+        for (ProdutoDigital produto : produtosAventura) {
             System.out.println(produto);
         }
 
-
-        // NOME DE PRODUTO
-        System.out.println("\nBUSCA POR NOME");
-
-        //PRODUTO NÃO ENCONTRADO
+        // BUSCA POR NOME
+        titulo("Busca por Nome");
 
         try {
             System.out.println(loja.buscarPorNome("GTA VI"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
-
         }
 
+        // MAIOR IDADE
+        titulo("Jogos com Maior Idade Recomendada");
 
-        // REMOVER PRODUTO DO CATALOGO
-        System.out.println("\nREMOÇÃO DE PRODUTOS");
+        List<Jogo> jogosMaiorIdade = loja.buscarJogosMaiorIdade();
+
+        for (Jogo jogo : jogosMaiorIdade) {
+            System.out.println(jogo);
+        }
+
+        // REMOÇÃO
+        titulo("Remoção de Produto");
+
         try {
             loja.removerProduto("Mario Party");
             System.out.println("Produto removido com sucesso!");
@@ -132,8 +166,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("\nCATÁLOGO ATUALIZADO");
+        // CATÁLOGO FINAL
+        titulo("Catálogo Atualizado");
         loja.mostrarCatalogo();
-
     }
 }

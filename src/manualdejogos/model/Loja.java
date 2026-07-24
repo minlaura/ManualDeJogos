@@ -1,9 +1,6 @@
 package manualdejogos.model;
 
-import manualdejogos.exception.IdadeInsuficienteException;
-import manualdejogos.exception.JogoBaseNaoEncontradoException;
-import manualdejogos.exception.ProdutoNaoEncontradoException;
-import manualdejogos.exception.SaldoInsuficienteException;
+import manualdejogos.exception.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +9,7 @@ public class Loja {
     private String nome;
     private String cnpj;
     private List<ProdutoDigital> catalogo = new ArrayList<>();
+
 
     public Loja(String nome, String cnpj) {
         this.nome = nome;
@@ -103,5 +101,32 @@ public class Loja {
         }
         return produtosPorGenero;
 
+
+
+    }
+    public List<Jogo> buscarJogosMaiorIdade() {
+
+        List<Jogo> jogosMaiorIdade = new ArrayList<>();
+        int maiorIdade = -1;
+
+        for (ProdutoDigital produto : catalogo) {
+
+            if (produto instanceof Jogo jogo) {
+
+                if (jogo.getIdadeRecomendada() > maiorIdade) {
+
+                    maiorIdade = jogo.getIdadeRecomendada();
+                    jogosMaiorIdade.clear();
+                    jogosMaiorIdade.add(jogo);
+
+                } else if (jogo.getIdadeRecomendada() == maiorIdade) {
+
+                    jogosMaiorIdade.add(jogo);
+
+                }
+            }
+        }
+
+        return jogosMaiorIdade;
     }
 }
