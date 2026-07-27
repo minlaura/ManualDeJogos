@@ -42,6 +42,8 @@ public class Main {
                 cyberpunk, 70.0
         );
 
+        Jogo deadbydaylight = new Jogo ( "Dead By Daylight", 2.0, 9, 18, Genero.TERROR, true, 0
+        );
         // LOJA
         Loja loja = new Loja("Petech", "000000.0");
 
@@ -49,6 +51,7 @@ public class Main {
         loja.adicionarProduto(cyberpunk);
         loja.adicionarProduto(liberty);
         loja.adicionarProduto(mario);
+        loja.adicionarProduto(deadbydaylight);
 
         // CATÁLOGO
         titulo("Catálogo de Jogos");
@@ -165,6 +168,18 @@ public class Main {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        //RETORNAR JOGOS MAIS BARATOS (0.0 A 5)
+        titulo("Jogos entre 0.0 à 5.0");
+        try {
+            List<Jogo> jogosMenoresPrecos = loja.buscarJogosMenoresPrecos();
+            for (Jogo jogo : jogosMenoresPrecos){
+                System.out.println(jogo);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
 
         // CATÁLOGO FINAL
         titulo("Catálogo Atualizado");

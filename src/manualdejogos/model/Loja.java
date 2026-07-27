@@ -129,4 +129,23 @@ public class Loja {
 
         return jogosMaiorIdade;
     }
+    public List <Jogo> buscarJogosMenoresPrecos () throws ProdutoNaoEncontradoException{
+
+        double maiorLimite = 5;
+        double menorLimite = 0;
+        List<Jogo> jogosMenoresPrecos = new ArrayList<>();
+        for (ProdutoDigital produto : catalogo){
+            if (produto instanceof Jogo jogo){
+                if (jogo.getPrecoBase() > 0 && jogo.getPrecoBase() <= 5){
+                    jogosMenoresPrecos.add(jogo);
+                }
+            }
+        }
+        if (jogosMenoresPrecos.isEmpty()){
+            throw new ProdutoNaoEncontradoException();
+        }
+        return jogosMenoresPrecos;
+
+
+    }
 }
