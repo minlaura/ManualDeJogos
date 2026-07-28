@@ -129,14 +129,15 @@ public class Loja {
 
         return jogosMaiorIdade;
     }
-    public List <Jogo> buscarJogosMenoresPrecos () throws ProdutoNaoEncontradoException{
+    public List <Jogo> buscarJogosBaratos() throws ProdutoNaoEncontradoException{
 
         double maiorLimite = 5;
         double menorLimite = 0;
         List<Jogo> jogosMenoresPrecos = new ArrayList<>();
         for (ProdutoDigital produto : catalogo){
             if (produto instanceof Jogo jogo){
-                if (jogo.getPrecoBase() > 0 && jogo.getPrecoBase() <= 5){
+                double precoFinal = jogo.calcularPrecoFinal();
+                if (precoFinal > menorLimite && precoFinal <= maiorLimite){
                     jogosMenoresPrecos.add(jogo);
                 }
             }
@@ -148,4 +149,35 @@ public class Loja {
 
 
     }
+
+    public List<Jogo> buscarJogosMaisBaratos() throws ProdutoNaoEncontradoException {
+
+        List<Jogo> jogosMaisBaratos = new ArrayList<>();
+        double menorPreco = Double.MAX_VALUE;
+
+        for (ProdutoDigital produto : catalogo) {
+
+            if (produto instanceof Jogo jogo) {
+
+                double precoFinal = jogo.calcularPrecoFinal();
+
+                if (precoFinal < menorPreco) {
+                    menorPreco = precoFinal;
+                    jogosMaisBaratos.clear();
+                    jogosMaisBaratos.add(jogo);
+
+                } else if (precoFinal == menorPreco) {
+                    jogosMaisBaratos.add(jogo);
+                }
+            }
+        }
+
+        if (jogosMaisBaratos.isEmpty()) {
+            throw new ProdutoNaoEncontradoException();
+        }
+
+        return jogosMaisBaratos;
+    }
+
+
 }

@@ -42,7 +42,7 @@ public class Main {
                 cyberpunk, 70.0
         );
 
-        Jogo deadbydaylight = new Jogo ( "Dead By Daylight", 2.0, 9, 18, Genero.TERROR, true, 0
+        Jogo deadbydaylight = new Jogo ( "Dead By Daylight", 2.0, 9, 18, Genero.TERROR, true, 10
         );
         // LOJA
         Loja loja = new Loja("Petech", "000000.0");
@@ -172,11 +172,24 @@ public class Main {
         //RETORNAR JOGOS MAIS BARATOS (0.0 A 5)
         titulo("Jogos entre 0.0 à 5.0");
         try {
-            List<Jogo> jogosMenoresPrecos = loja.buscarJogosMenoresPrecos();
-            for (Jogo jogo : jogosMenoresPrecos){
+            List<Jogo> jogosAteCincoReais = loja.buscarJogosBaratos();
+            for (Jogo jogo : jogosAteCincoReais){
                 System.out.println(jogo);
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        // JOGOS COM O PREÇO MAIS BARATO NO CATALOGO
+
+        titulo("Jogos com o preço mais barato disponível");
+
+        try {
+            List<Jogo> jogosMenorPreco = loja.buscarJogosMaisBaratos();
+                for (Jogo jogo : jogosMenorPreco){
+                    System.out.println(jogo);
+                }
+        } catch (Exception e){
             System.out.println(e.getMessage());
         }
 

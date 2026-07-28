@@ -11,6 +11,7 @@ package manualdejogos.model;
  */
 
 
+
 public abstract class ProdutoDigital {
     private String nome;
     private double precoBase;
@@ -44,7 +45,10 @@ public abstract class ProdutoDigital {
 
     @Override
     public String toString() {
-        return " Produto Digital = " + "\nID: " + id + "\nNome: " + nome + "\nPreço Base: R$ " + String.format("%.2f", precoBase);
-
+        return "Produto Digital = "
+                + "\nID: " + id
+                + "\nNome: " + nome
+                + "\nPreço Base: R$ " + String.format("%.2f", precoBase)
+                + "\nPreço Final: R$ " + String.format("%.2f", calcularPrecoFinal());
     }
 }
