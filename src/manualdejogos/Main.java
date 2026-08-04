@@ -1,6 +1,10 @@
 package manualdejogos;
 
-import manualdejogos.model.*;
+import manualdejogos.model.Genero;
+import manualdejogos.model.Jogo;
+import manualdejogos.model.Loja;
+import manualdejogos.model.ProdutoDigital;
+import manualdejogos.model.Usuario;
 
 import java.util.List;
 import java.util.Locale;
@@ -8,56 +12,31 @@ import java.util.Locale;
 public class Main {
 
     private static void titulo(String texto) {
-        System.out.println("\n• " + texto);
+        System.out.println("\n -- " + texto);
     }
 
     public static void main(String[] args) {
 
         Locale.setDefault(Locale.US);
 
-        // USUÁRIOS
+        // Usuários usados nos testes
         Usuario usuarioComum = new Usuario("Minus", 19, 500.0);
         Usuario usuarioMenor = new Usuario("Pedro", 10, 500.0);
         Usuario usuarioSemSaldo = new Usuario("Paulo", 18, 0.0);
         Usuario usuarioNovo = new Usuario("Ana", 20, 500.0);
 
-        // PRODUTOS
-        Jogo minecraft = new Jogo(
-                "Minecraft", 100.0, 1, 10,
-                Genero.AVENTURA, true, 20
-        );
+        // Loja e produtos criados pela classe DadosIniciais
+        Loja loja = DadosIniciais.criarLoja();
 
-        Jogo cyberpunk = new Jogo(
-                "Cyberpunk 2077", 200.0, 2, 18,
-                Genero.ACAO, false, 25
-        );
+        // Cadastro dos usuários na loja
+        loja.adicionarUsuario(usuarioComum);
+        loja.adicionarUsuario(usuarioMenor);
+        loja.adicionarUsuario(usuarioSemSaldo);
+        loja.adicionarUsuario(usuarioNovo);
 
-        Jogo mario = new Jogo(
-                "Mario Party", 50.0, 5, 5,
-                Genero.AVENTURA, true, 5
-        );
-
-        DLC liberty = new DLC(
-                "Phantom Liberty", 70.0, 3,
-                cyberpunk, 70.0
-        );
-
-        Jogo deadbydaylight = new Jogo ( "Dead By Daylight", 2.0, 9, 18, Genero.TERROR, true, 10
-        );
-        // LOJA
-        Loja loja = new Loja("Petech", "000000.0");
-
-        loja.adicionarProduto(minecraft);
-        loja.adicionarProduto(cyberpunk);
-        loja.adicionarProduto(liberty);
-        loja.adicionarProduto(mario);
-        loja.adicionarProduto(deadbydaylight);
-
-        // CATÁLOGO
         titulo("Catálogo de Jogos");
         loja.mostrarCatalogo();
 
-        // BUSCA POR ID
         titulo("Busca por ID");
 
         try {
@@ -66,11 +45,9 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        // DADOS DO USUÁRIO
         titulo("Dados do Usuário");
         System.out.println(usuarioComum);
 
-        // COMPRA DE JOGO
         titulo("Compra de Jogo");
 
         try {
@@ -80,7 +57,6 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        // COMPRA DE DLC
         titulo("Compra de DLC");
 
         try {
@@ -90,15 +66,12 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        // DADOS APÓS AS COMPRAS
         titulo("Dados Atualizados do Usuário");
         System.out.println(usuarioComum);
 
-        // BIBLIOTECA
         titulo("Biblioteca do Usuário");
         usuarioComum.mostrarBiblioteca();
 
-        // TESTES
         titulo("Teste - Idade Insuficiente");
 
         try {
@@ -132,16 +105,15 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        // BUSCA POR GÊNERO
         titulo("Produtos do Gênero Aventura");
 
-        List<ProdutoDigital> produtosAventura = loja.buscarPorGenero(Genero.AVENTURA);
+        List<ProdutoDigital> produtosAventura =
+                loja.buscarPorGenero(Genero.AVENTURA);
 
         for (ProdutoDigital produto : produtosAventura) {
             System.out.println(produto);
         }
 
-        // BUSCA POR NOME
         titulo("Busca por Nome");
 
         try {
@@ -150,16 +122,15 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        // MAIOR IDADE
         titulo("Jogos com Maior Idade Recomendada");
 
-        List<Jogo> jogosMaiorIdade = loja.buscarJogosMaiorIdade();
+        List<Jogo> jogosMaiorIdade =
+                loja.buscarJogosMaiorIdade();
 
         for (Jogo jogo : jogosMaiorIdade) {
             System.out.println(jogo);
         }
 
-        // REMOÇÃO
         titulo("Remoção de Produto");
 
         try {
@@ -169,32 +140,32 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        //RETORNAR JOGOS MAIS BARATOS (0.0 A 5)
-        titulo("Jogos entre 0.0 à 5.0");
+        titulo("Jogos entre R$ 0,00 e R$ 5,00");
+
         try {
-            List<Jogo> jogosAteCincoReais = loja.buscarJogosBaratos();
-            for (Jogo jogo : jogosAteCincoReais){
+            List<Jogo> jogosAteCincoReais =
+                    loja.buscarJogosBaratos();
+
+            for (Jogo jogo : jogosAteCincoReais) {
                 System.out.println(jogo);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        // JOGOS COM O PREÇO MAIS BARATO NO CATALOGO
-
-        titulo("Jogos com o preço mais barato disponível");
+        titulo("Jogos com o Menor Preço Disponível");
 
         try {
-            List<Jogo> jogosMenorPreco = loja.buscarJogosMaisBaratos();
-                for (Jogo jogo : jogosMenorPreco){
-                    System.out.println(jogo);
-                }
-        } catch (Exception e){
+            List<Jogo> jogosMenorPreco =
+                    loja.buscarJogosMaisBaratos();
+
+            for (Jogo jogo : jogosMenorPreco) {
+                System.out.println(jogo);
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-
-        // CATÁLOGO FINAL
         titulo("Catálogo Atualizado");
         loja.mostrarCatalogo();
     }

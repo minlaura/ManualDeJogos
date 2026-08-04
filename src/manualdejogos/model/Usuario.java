@@ -17,8 +17,8 @@ import java.util.List;
  * Também é responsável por realizar compras
  * e gerenciar sua biblioteca.
  */
-
 public class Usuario {
+
     private String nome;
     private int idade;
     private double saldo;
@@ -34,83 +34,64 @@ public class Usuario {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public int getIdade() {
         return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
     }
 
     public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    public List<ProdutoDigital> getBiblioteca() {
-        return biblioteca;
-    }
-
-    public void setBiblioteca(List<ProdutoDigital> biblioteca) {
-        this.biblioteca = biblioteca;
+    public void alterarNome(String novoNome) {
+        this.nome = novoNome;
     }
 
     public void adicionarSaldo(double valor) {
-        saldo = saldo + valor;
-
+        saldo += valor;
     }
-    /**
-     * Verifica se o usuário possui um produto
-     * em sua biblioteca.
-     *
-     * @param produto produto a ser verificado.
-     * @return true se o produto estiver na biblioteca.
-     */
 
+    /**
+     * Verifica se o usuário possui um produto em sua biblioteca.
+     *
+     * @param produto produto a ser verificado
+     * @return true se o produto estiver na biblioteca
+     */
     public boolean possuiProduto(ProdutoDigital produto) {
         return biblioteca.contains(produto);
     }
 
-
     /**
      * Realiza a compra de um produto digital.
      *
-     * @param produto produto a ser adquirido.
-     * @throws IdadeInsuficienteException se o usuário não possuir idade suficiente.
-     * @throws JogoBaseNaoEncontradoException se a DLC for adquirida sem o jogo base.
-     * @throws SaldoInsuficienteException se o saldo for insuficiente.
+     * @param produto produto a ser adquirido
+     * @throws IdadeInsuficienteException se o usuário não possuir idade suficiente
+     * @throws JogoBaseNaoEncontradoException se a DLC for adquirida sem o jogo base
+     * @throws SaldoInsuficienteException se o saldo for insuficiente
      */
-
-    public void comprar(ProdutoDigital produto) throws IdadeInsuficienteException, JogoBaseNaoEncontradoException, SaldoInsuficienteException {
+    public void comprar(ProdutoDigital produto)
+            throws IdadeInsuficienteException,
+            JogoBaseNaoEncontradoException,
+            SaldoInsuficienteException {
 
         if (produto instanceof Jogo jogo) {
-            if (getIdade() < jogo.getIdadeRecomendada()) {
+            if (idade < jogo.getIdadeRecomendada()) {
                 throw new IdadeInsuficienteException();
             }
-
         }
+
         if (produto instanceof DLC dlc) {
             if (!possuiProduto(dlc.getJogoBase())) {
                 throw new JogoBaseNaoEncontradoException();
-
             }
-
         }
+
         double precoFinal = produto.calcularPrecoFinal();
 
         if (saldo < precoFinal) {
-
             throw new SaldoInsuficienteException();
-
         }
-        saldo = saldo - precoFinal;
+
+        saldo -= precoFinal;
         biblioteca.add(produto);
     }
 
@@ -118,13 +99,14 @@ public class Usuario {
         for (ProdutoDigital produto : biblioteca) {
             System.out.println(produto);
         }
-
     }
 
     @Override
     public String toString() {
-        return "Usuario {" + " \nNome ='" + nome + '\'' + ", \nIdade =" + idade + ",\nSaldo da Conta =" + String.format("%.2f", saldo) + '}';
+        return "Usuario {"
+                + "\nNome: " + nome
+                + "\nIdade: " + idade
+                + "\nSaldo da conta: R$ " + String.format("%.2f", saldo)
+                + "\n}";
     }
 }
-
-

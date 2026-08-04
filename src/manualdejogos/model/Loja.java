@@ -6,84 +6,81 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Loja {
+
     private String nome;
     private String cnpj;
-    private List<ProdutoDigital> catalogo = new ArrayList<>();
 
+    private List<ProdutoDigital> catalogo = new ArrayList<>();
+    private List<Usuario> usuarios = new ArrayList<>();
 
     public Loja(String nome, String cnpj) {
         this.nome = nome;
         this.cnpj = cnpj;
-        this.catalogo = new ArrayList<>();
     }
 
     public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
-
     public String getNome() {
         return nome;
     }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public List<ProdutoDigital> getCatalogo() {
-        return catalogo;
-    }
-
-    public void setCatalogo(List<ProdutoDigital> catalogo) {
-        this.catalogo = catalogo;
-    }
-
 
     public void adicionarProduto(ProdutoDigital produto) {
         catalogo.add(produto);
     }
 
-    public void removerProduto(String nome){
+    public void adicionarUsuario(Usuario usuario) {
+        usuarios.add(usuario);
+    }
+
+    public void removerProduto(String nome)
+            throws ProdutoNaoEncontradoException {
+
         ProdutoDigital produto = buscarPorNome(nome);
         catalogo.remove(produto);
     }
 
+    public ProdutoDigital buscarPorId(int id)
+            throws ProdutoNaoEncontradoException {
 
-    public ProdutoDigital buscarPorId(int id) throws ProdutoNaoEncontradoException {
-        for (ProdutoDigital produtoPorID : catalogo) {
-            if (produtoPorID.getId() == id) {
-                return produtoPorID;
+        for (ProdutoDigital produto : catalogo) {
+
+            if (produto.getId() == id) {
+                return produto;
             }
         }
-        throw new ProdutoNaoEncontradoException();
 
+        throw new ProdutoNaoEncontradoException();
     }
 
-    public ProdutoDigital buscarPorNome(String nome) throws ProdutoNaoEncontradoException {
+    public ProdutoDigital buscarPorNome(String nome)
+            throws ProdutoNaoEncontradoException {
+
         for (ProdutoDigital produto : catalogo) {
 
             if (produto.getNome().equalsIgnoreCase(nome)) {
                 return produto;
             }
-
         }
 
         throw new ProdutoNaoEncontradoException();
-
     }
 
-    public void vender(Usuario usuario, int id) throws SaldoInsuficienteException, IdadeInsuficienteException, JogoBaseNaoEncontradoException, ProdutoNaoEncontradoException {
+    public void vender(Usuario usuario, int id)
+            throws SaldoInsuficienteException,
+            IdadeInsuficienteException,
+            JogoBaseNaoEncontradoException,
+            ProdutoNaoEncontradoException {
+
         ProdutoDigital produto = buscarPorId(id);
         usuario.comprar(produto);
     }
 
     public void mostrarCatalogo() {
+
         for (ProdutoDigital produto : catalogo) {
             System.out.println(produto);
-
         }
     }
 
@@ -92,18 +89,18 @@ public class Loja {
         List<ProdutoDigital> produtosPorGenero = new ArrayList<>();
 
         for (ProdutoDigital produto : catalogo) {
+
             if (produto instanceof Jogo jogo) {
+
                 if (jogo.getGenero() == genero) {
                     produtosPorGenero.add(produto);
                 }
-
             }
         }
+
         return produtosPorGenero;
-
-
-
     }
+
     public List<Jogo> buscarJogosMaiorIdade() {
 
         List<Jogo> jogosMaiorIdade = new ArrayList<>();
@@ -122,35 +119,44 @@ public class Loja {
                 } else if (jogo.getIdadeRecomendada() == maiorIdade) {
 
                     jogosMaiorIdade.add(jogo);
-
                 }
             }
         }
 
         return jogosMaiorIdade;
     }
-    public List <Jogo> buscarJogosBaratos() throws ProdutoNaoEncontradoException{
+
+    public List<Jogo> buscarJogosBaratos()
+            throws ProdutoNaoEncontradoException {
 
         double maiorLimite = 5;
         double menorLimite = 0;
-        List<Jogo> jogosMenoresPrecos = new ArrayList<>();
-        for (ProdutoDigital produto : catalogo){
-            if (produto instanceof Jogo jogo){
+
+        List<Jogo> jogosBaratos = new ArrayList<>();
+
+        for (ProdutoDigital produto : catalogo) {
+
+            if (produto instanceof Jogo jogo) {
+
                 double precoFinal = jogo.calcularPrecoFinal();
-                if (precoFinal > menorLimite && precoFinal <= maiorLimite){
-                    jogosMenoresPrecos.add(jogo);
+
+                if (precoFinal > menorLimite
+                        && precoFinal <= maiorLimite) {
+
+                    jogosBaratos.add(jogo);
                 }
             }
         }
-        if (jogosMenoresPrecos.isEmpty()){
+
+        if (jogosBaratos.isEmpty()) {
             throw new ProdutoNaoEncontradoException();
         }
-        return jogosMenoresPrecos;
 
-
+        return jogosBaratos;
     }
 
-    public List<Jogo> buscarJogosMaisBaratos() throws ProdutoNaoEncontradoException {
+    public List<Jogo> buscarJogosMaisBaratos()
+            throws ProdutoNaoEncontradoException {
 
         List<Jogo> jogosMaisBaratos = new ArrayList<>();
         double menorPreco = Double.MAX_VALUE;
@@ -162,11 +168,13 @@ public class Loja {
                 double precoFinal = jogo.calcularPrecoFinal();
 
                 if (precoFinal < menorPreco) {
+
                     menorPreco = precoFinal;
                     jogosMaisBaratos.clear();
                     jogosMaisBaratos.add(jogo);
 
                 } else if (precoFinal == menorPreco) {
+
                     jogosMaisBaratos.add(jogo);
                 }
             }
@@ -178,6 +186,4 @@ public class Loja {
 
         return jogosMaisBaratos;
     }
-
-
 }
