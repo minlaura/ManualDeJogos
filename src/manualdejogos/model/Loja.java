@@ -176,4 +176,18 @@ public class Loja {
 
         return jogosMaisBaratos;
     }
+    public List<ProdutoDigital> buscarProdutoPorFaixaDePreco(double precoMinimo, double precoMaximo) {
+
+        List<ProdutoDigital> produtoPorFaixa = new ArrayList<>();
+
+        for (ProdutoDigital produto : catalogo) {
+
+                double precoFinal = produto.calcularPrecoFinal();
+
+                if (precoFinal >= precoMinimo && precoFinal <= precoMaximo) {
+                    produtoPorFaixa.add(produto);
+                }
+            }
+        return produtoPorFaixa;
+    }
 }

@@ -23,6 +23,7 @@ public class Usuario {
     private int idade;
     private double saldo;
     private List<ProdutoDigital> biblioteca = new ArrayList<>();
+    private List<ProdutoDigital> produtosFavoritos = new ArrayList<>();
 
     public Usuario(String nome, int idade, double saldo) {
         this.nome = nome;
@@ -97,6 +98,25 @@ public class Usuario {
 
     public void mostrarBiblioteca() {
         for (ProdutoDigital produto : biblioteca) {
+            System.out.println(produto);
+        }
+    }
+
+    public void favoritarProduto(ProdutoDigital produto) {
+        if (!produtosFavoritos.contains(produto)) {
+            produtosFavoritos.add(produto);
+        }
+    }
+
+    public void desfavoritarProduto(ProdutoDigital produto) {
+            if (produtosFavoritos.contains(produto)) {
+                produtosFavoritos.remove(produto);
+            }
+        }
+
+    public void mostrarProdutosFavoritos() {
+
+        for (ProdutoDigital produto : produtosFavoritos) {
             System.out.println(produto);
         }
     }
