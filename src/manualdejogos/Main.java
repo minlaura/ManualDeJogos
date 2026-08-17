@@ -142,28 +142,20 @@ public class Main {
 
         titulo("Jogos entre R$ 0,00 e R$ 5,00");
 
-        try {
-            List<Jogo> jogosAteCincoReais =
-                    loja.buscarJogosBaratos();
+        List<Jogo> jogosAteCincoReais =
+                loja.buscarJogosBaratos();
 
-            for (Jogo jogo : jogosAteCincoReais) {
-                System.out.println(jogo);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        for (Jogo jogo : jogosAteCincoReais) {
+            System.out.println(jogo);
         }
 
         titulo("Jogos com o Menor Preço Disponível");
 
-        try {
-            List<Jogo> jogosMenorPreco =
-                    loja.buscarJogosMaisBaratos();
+        List<Jogo> jogosMenorPreco =
+                loja.buscarJogosMaisBaratos();
 
-            for (Jogo jogo : jogosMenorPreco) {
-                System.out.println(jogo);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        for (Jogo jogo : jogosMenorPreco) {
+            System.out.println(jogo);
         }
 
         titulo("Catálogo Atualizado");

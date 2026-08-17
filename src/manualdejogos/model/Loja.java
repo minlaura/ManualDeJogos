@@ -126,8 +126,7 @@ public class Loja {
         return jogosMaiorIdade;
     }
 
-    public List<Jogo> buscarJogosBaratos()
-            throws ProdutoNaoEncontradoException {
+    public List<Jogo> buscarJogosBaratos() {
 
         double maiorLimite = 5;
         double menorLimite = 0;
@@ -148,15 +147,10 @@ public class Loja {
             }
         }
 
-        if (jogosBaratos.isEmpty()) {
-            throw new ProdutoNaoEncontradoException();
-        }
-
         return jogosBaratos;
     }
 
-    public List<Jogo> buscarJogosMaisBaratos()
-            throws ProdutoNaoEncontradoException {
+    public List<Jogo> buscarJogosMaisBaratos() {
 
         List<Jogo> jogosMaisBaratos = new ArrayList<>();
         double menorPreco = Double.MAX_VALUE;
@@ -178,10 +172,6 @@ public class Loja {
                     jogosMaisBaratos.add(jogo);
                 }
             }
-        }
-
-        if (jogosMaisBaratos.isEmpty()) {
-            throw new ProdutoNaoEncontradoException();
         }
 
         return jogosMaisBaratos;
