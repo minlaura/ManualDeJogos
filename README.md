@@ -186,7 +186,7 @@ JogoBaseNaoEncontradoException
 1. Clone este repositório:
 
 ```bash
-git clone URL_DO_REPOSITORIO
+git clone https://github.com/minlaura/ManualDeJogos.git
 ```
 
 2. Abra o projeto no IntelliJ IDEA ou em outra IDE compatível com Java.
