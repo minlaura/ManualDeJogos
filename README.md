@@ -1,135 +1,219 @@
 # 🎮 Manual de Jogos
 
-> Plataforma digital desenvolvida em **Java** utilizando **Programação Orientada a Objetos (POO)** para simular a compra e o gerenciamento de jogos digitais.
+Sistema de gerenciamento de jogos digitais desenvolvido em **Java**, com foco na aplicação prática dos principais conceitos de **Programação Orientada a Objetos (POO)**.
+
+O projeto simula uma plataforma de distribuição digital, permitindo o gerenciamento de usuários, jogos, DLCs, compras, biblioteca pessoal, favoritos e catálogo de produtos.
+
+---
 
 ## Sobre o projeto
 
-O **Manual de Jogos** simula o funcionamento de uma plataforma de distribuição de jogos digitais. 
+O **Manual de Jogos** foi desenvolvido como projeto de estudo para consolidar conceitos fundamentais da linguagem Java e da Programação Orientada a Objetos.
 
-O sistema permite cadastrar jogos e DLCs, gerenciar usuários, realizar compras e controlar regras de negócio, como idade mínima, saldo disponível e dependência entre jogos e DLCs.
+A aplicação possui regras de negócio relacionadas à compra de produtos digitais, como:
 
-O objetivo do projeto é aplicar conceitos fundamentais de **Programação Orientada a Objetos**, coleções (`ArrayList`) e tratamento de exceções personalizadas.
+* classificação indicativa;
+* saldo disponível;
+* necessidade de possuir o jogo base para adquirir uma DLC;
+* busca e gerenciamento de produtos;
+* tratamento de situações inválidas através de exceções personalizadas.
+
+O projeto utiliza coleções Java para armazenar produtos, usuários, biblioteca e favoritos.
 
 ---
 
 ## Funcionalidades
 
-### 👤 Usuários
+### Usuários
 
-- Cadastro de usuários
-- Adição de saldo
-- Biblioteca pessoal de jogos
-- Compra de jogos e DLCs
-- Exibição da biblioteca
+* Cadastro de usuários
+* Alteração de nome
+* Adição de saldo
+* Compra de produtos digitais
+* Biblioteca pessoal
+* Verificação de produtos adquiridos
+* Favoritar produtos
+* Desfavoritar produtos
+* Exibição da biblioteca
+* Exibição dos produtos favoritos
 
-### 🎮 Produtos
+### Produtos digitais
 
-- Jogos
-- DLCs
+O sistema trabalha com diferentes tipos de produtos através da classe abstrata `ProdutoDigital`.
 
-### 🏪 Plataforma
+Atualmente estão implementados:
 
-- Adicionar produtos ao catálogo
-- Buscar produto por ID
-- Buscar produto por nome
-- Buscar produtos por gênero
-- Exibir catálogo
-- Remover produtos
-- Realizar vendas
+* `Jogo`
+* `DLC`
 
----
+Cada tipo possui atributos e regras específicas.
 
-## 📋 Regras de negócio
+### Loja
 
-✔️ O usuário deve possuir saldo suficiente para realizar uma compra.
-
-✔️ Jogos respeitam classificação indicativa.
-
-✔️ DLCs só podem ser adquiridas caso o usuário possua o jogo base.
-
-✔️ Produtos inexistentes geram exceções específicas.
-
----
-
-## 📚 Conceitos de POO aplicados
-
-- Classes e Objetos
-- Encapsulamento
-- Herança
-- Polimorfismo
-- Classes Abstratas
-- Enum
-- Sobrescrita de métodos
-- Collections (`ArrayList`)
-- Tratamento de exceções
-- Reutilização de código
+* Cadastro de produtos
+* Remoção de produtos
+* Cadastro de usuários
+* Busca de produto por ID
+* Busca de produto por nome
+* Busca de jogos por gênero
+* Busca de produtos por faixa de preço
+* Realização de vendas
+* Gerenciamento do catálogo
 
 ---
 
-## 📂 Estrutura do projeto
+## Regras de negócio
+
+* O usuário deve possuir saldo suficiente para realizar uma compra.
+* Jogos respeitam sua classificação indicativa.
+* DLCs exigem que o usuário possua o jogo base correspondente.
+* Produtos adquiridos são adicionados à biblioteca do usuário.
+* Situações inválidas são tratadas através de exceções específicas.
+
+---
+
+## Conceitos aplicados
+
+* Classes e objetos
+* Encapsulamento
+* Herança
+* Polimorfismo
+* Classes abstratas
+* Métodos abstratos
+* Sobrescrita de métodos
+* Enum
+* Associação entre objetos
+* Collections
+* `List`
+* `ArrayList`
+* `for-each`
+* Tratamento de exceções
+* Exceções personalizadas
+* `instanceof`
+* `toString`
+* Reutilização de código
+* Separação de responsabilidades
+
+---
+
+## Estrutura do projeto
 
 ```text
 manualdejogos
 │
 ├── model
-│   ├── ProdutoDigital
-│   ├── Jogo
-│   ├── DLC
-│   ├── Usuario
-│   ├── Loja
-│   └── Genero
+│   ├── ProdutoDigital.java
+│   ├── Jogo.java
+│   ├── DLC.java
+│   ├── Usuario.java
+│   ├── Loja.java
+│   └── Genero.java
 │
 ├── exception
-│   ├── ProdutoNaoEncontradoException
-│   ├── SaldoInsuficienteException
-│   ├── IdadeInsuficienteException
-│   └── JogoBaseNaoEncontradoException
+│   ├── ProdutoNaoEncontradoException.java
+│   ├── SaldoInsuficienteException.java
+│   ├── IdadeInsuficienteException.java
+│   └── JogoBaseNaoEncontradoException.java
 │
-└── Main
+├── DadosIniciais.java
+│
+└── Main.java
 ```
 
 ---
 
-## 🛠 Tecnologias utilizadas
+## Principais classes
 
-- Java
-- IntelliJ IDEA
-- Programação Orientada a Objetos
-- Java Collections Framework
+### `ProdutoDigital`
+
+Classe abstrata responsável pelos atributos e comportamentos comuns aos produtos digitais.
+
+É utilizada como classe base para `Jogo` e `DLC`.
+
+### `Jogo`
+
+Representa um jogo disponível na plataforma.
+
+Possui informações como nome, preço, ID, idade recomendada, gênero, multiplayer e desconto.
+
+### `DLC`
+
+Representa um conteúdo adicional relacionado a um jogo existente.
+
+Mantém uma referência para o jogo base e possui regras específicas para sua compra.
+
+### `Usuario`
+
+Responsável pelos dados e operações do usuário, incluindo saldo, biblioteca, compras e produtos favoritos.
+
+### `Loja`
+
+Responsável pelo gerenciamento do catálogo e dos usuários.
+
+Centraliza operações de busca, cadastro, remoção e venda de produtos.
+
+### `DadosIniciais`
+
+Responsável pela criação dos dados iniciais utilizados pela aplicação, evitando concentrar toda a configuração do sistema dentro da classe `Main`.
 
 ---
 
-## ▶️ Como executar
+## Exceções personalizadas
 
-1. Clone este repositório.
-2. Abra o projeto na IDE de sua preferência.
-3. Execute a classe `Main.java`.
+O projeto utiliza exceções próprias para representar situações relacionadas às regras de negócio:
 
----
-
-## Funcionalidades implementadas
-
-- [x] Sistema de usuários
-- [x] Sistema de compras
-- [x] Biblioteca de jogos
-- [x] Busca por ID
-- [x] Busca por nome
-- [x] Busca por gênero
-- [x] Remoção de produtos
-- [x] Catálogo da loja
-- [x] Venda por ID
-- [x] Exceções personalizadas
+```text
+ProdutoNaoEncontradoException
+SaldoInsuficienteException
+IdadeInsuficienteException
+JogoBaseNaoEncontradoException
+```
 
 ---
 
-## Melhorias futuras
+## Tecnologias utilizadas
 
-- [ ] Buscar apenas jogos
-- [ ] Buscar apenas DLCs
-- [ ] Contagem de produtos
-- [ ] Ordenação por preço
-- [ ] Persistência em arquivos
-- [ ] Interface gráfica
-- [ ] Sistema de login
-- [ ] Histórico de compras
+* Java
+* IntelliJ IDEA
+* Java Collections Framework
+* Git
+* GitHub
 
+---
+
+## Como executar
+
+1. Clone este repositório:
+
+```bash
+git clone URL_DO_REPOSITORIO
+```
+
+2. Abra o projeto no IntelliJ IDEA ou em outra IDE compatível com Java.
+
+3. Execute a classe:
+
+```text
+Main.java
+```
+
+---
+
+## Próximos passos
+
+* Implementar testes automatizados com JUnit
+* Ampliar os testes das regras de negócio
+* Ordenar produtos por preço
+* Criar filtros adicionais para jogos e DLCs
+* Implementar histórico de compras
+* Adicionar persistência de dados
+* Melhorar a organização em pacotes
+* Futuramente integrar com banco de dados
+
+---
+
+## Objetivo de aprendizado
+
+O principal objetivo deste projeto é acompanhar minha evolução em Java através da construção gradual de uma aplicação orientada a objetos.
+
+Cada nova funcionalidade é utilizada para praticar e consolidar conceitos antes de avançar para tópicos mais complexos.
