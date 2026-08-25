@@ -43,18 +43,6 @@ public class UsuarioTest {
         );
     }
 
-    @Test
-    void deveFalharCompraPorIdade() {
-        Usuario usuarioIdade = new Usuario("TesteIdade", 8, 100.0);
-        ProdutoDigital produtoDigital = loja.buscarPorNome("Minecraft");
-        assertThrows(
-                IdadeInsuficienteException.class,
-                () -> usuarioIdade.comprar(produtoDigital)
-        );
-        assertFalse(usuarioIdade.possuiProduto(produtoDigital));
-        assertEquals(100.0, usuarioIdade.getSaldo());
-
-    }
 
     @Test
     void deveFalharCompraDeDlcSemJogoBase() {
@@ -112,4 +100,30 @@ public class UsuarioTest {
         assertTrue(usuario.possuiProduto(produto));
 
     }
+    @Test
+    void deveFalharCompraPorIdade() {
+        Usuario usuarioIdade = new Usuario("TesteIdade", 8, 100.0);
+        ProdutoDigital produto = loja.buscarPorNome("Minecraft");
+        assertThrows(
+                IdadeInsuficienteException.class,
+                () ->usuarioIdade.comprar(produto)
+        );
+        assertAll (
+                () -> assertFalse(usuarioIdade.possuiProduto(produto)),
+                () -> assertEquals (100, usuarioIdade.getSaldo())
+        );
+
+    }
+    @Test
+    void devePermitirCompraComIdadeIgualARecomendada() throws JogoBaseNaoEncontradoException, IdadeInsuficienteException, SaldoInsuficienteException {
+        Usuario usuarioIdade = new Usuario("TesteIdade", 10, 100.0);
+        ProdutoDigital produto = loja.buscarPorNome("Minecraft");
+        usuarioIdade.comprar(produto);
+        assertAll(
+                () -> assertTrue(usuarioIdade.possuiProduto(produto)),
+                () -> assertEquals(20.0,  usuarioIdade.getSaldo())
+        );
+
+    }
 }
+
