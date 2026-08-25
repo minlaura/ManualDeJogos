@@ -51,6 +51,10 @@ public class Usuario {
         saldo += valor;
     }
 
+    public boolean estaFavoritado(ProdutoDigital produto) {
+        return produtosFavoritos.contains(produto);
+    }
+
     /**
      * Verifica se o usuário possui um produto em sua biblioteca.
      *

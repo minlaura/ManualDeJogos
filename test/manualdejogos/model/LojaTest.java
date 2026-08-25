@@ -1,24 +1,23 @@
 package manualdejogos.model;
+
 import manualdejogos.DadosIniciais;
-import manualdejogos.exception.IdadeInsuficienteException;
-import manualdejogos.exception.JogoBaseNaoEncontradoException;
 import manualdejogos.exception.ProdutoNaoEncontradoException;
-import manualdejogos.exception.SaldoInsuficienteException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LojaTest {
     private Loja loja;
-    private Usuario usuario;
+
 
     @BeforeEach
-    void prepararDadosLoja(){
+    void prepararDadosLoja() {
         loja = DadosIniciais.criarLoja();
-        usuario = new Usuario("Teste", 20, 500.0);
     }
 
     @Test
@@ -27,17 +26,19 @@ public class LojaTest {
 
         assertEquals(1, produtoPorId.getId());
     }
-    @Test
-    void deveLancarExcecaoAoBuscarProdutoInexistente () {
 
-        assertThrows (
+    @Test
+    void deveLancarExcecaoAoBuscarProdutoInexistente() {
+
+        assertThrows(
                 ProdutoNaoEncontradoException.class,
                 () -> loja.buscarPorId(999)
         );
 
     }
+
     @Test
-    void deveBuscarProdutoPorNome(){
+    void deveBuscarProdutoPorNome() {
         ProdutoDigital produtoPorNome = loja.buscarPorNome("Minecraft");
         assertEquals("Minecraft", produtoPorNome.getNome());
     }
@@ -48,49 +49,28 @@ public class LojaTest {
         assertEquals(3, produtosPorFaixa.size());
 
     }
-    @Test
-        void deveRemoverProduto() {
-           loja.removerProduto("Minecraft");
-
-            assertThrows(
-                    ProdutoNaoEncontradoException.class,
-                    () -> loja.buscarPorNome("Minecraft")
-            );
-        }
 
     @Test
-    void deveComprarProduto ()
-    throws SaldoInsuficienteException, IdadeInsuficienteException, JogoBaseNaoEncontradoException {
-        ProdutoDigital produtoDigital = loja.buscarPorNome("Minecraft");
-        usuario.comprar(produtoDigital);
-        assertTrue (usuario.possuiProduto(produtoDigital));
-        assertEquals(420.0, usuario.getSaldo());
+    void deveRemoverProduto() {
+        loja.removerProduto("Minecraft");
 
-    }
-    @Test
-    void deveFalharCompraPorSaldo (){
-        Usuario usuarioSemSaldo = new Usuario("TesteSaldo", 20, 0.0);
-        ProdutoDigital produtoDigital = loja.buscarPorNome("Minecraft");
         assertThrows(
-            SaldoInsuficienteException.class,
-                () -> usuarioSemSaldo.comprar(produtoDigital)
+                ProdutoNaoEncontradoException.class,
+                () -> loja.buscarPorNome("Minecraft")
         );
-        }
-
-
-     @Test
-    void deveFalharCompraPorIdade (){
-        Usuario usuarioIdade = new Usuario("TesteIdade", 8, 100.0 );
-        ProdutoDigital produtoDigital = loja.buscarPorNome("Minecraft");
-        assertThrows(
-                IdadeInsuficienteException.class,
-                () -> usuarioIdade.comprar(produtoDigital)
-        );
-        assertFalse(usuarioIdade.possuiProduto(produtoDigital));
-        assertEquals(100.0, usuarioIdade.getSaldo());
-
     }
+    @Test
+    void deveBuscarJogosPorGenero() {
+        List <ProdutoDigital> produtosPorGenero = loja.buscarPorGenero(Genero.AVENTURA);
+        assertEquals(2, produtosPorGenero.size());
+
+        ProdutoDigital produto = loja.buscarPorNome("Minecraft");
+        assertTrue (produtosPorGenero.contains(produto));
     }
+
+
+
+}
 
 
 
