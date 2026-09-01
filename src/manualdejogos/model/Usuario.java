@@ -5,7 +5,9 @@ import manualdejogos.exception.JogoBaseNaoEncontradoException;
 import manualdejogos.exception.SaldoInsuficienteException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Representa um usuário da plataforma.
@@ -22,8 +24,10 @@ public class Usuario {
     private String nome;
     private int idade;
     private double saldo;
+
     private List<ProdutoDigital> biblioteca = new ArrayList<>();
-    private List<ProdutoDigital> produtosFavoritos = new ArrayList<>();
+
+    private Set<ProdutoDigital> produtosFavoritos = new HashSet<>();
 
     public Usuario(String nome, int idade, double saldo) {
         this.nome = nome;
@@ -107,19 +111,14 @@ public class Usuario {
     }
 
     public void favoritarProduto(ProdutoDigital produto) {
-        if (!produtosFavoritos.contains(produto)) {
-            produtosFavoritos.add(produto);
-        }
+        produtosFavoritos.add(produto);
     }
 
     public void desfavoritarProduto(ProdutoDigital produto) {
-            if (produtosFavoritos.contains(produto)) {
-                produtosFavoritos.remove(produto);
-            }
-        }
+        produtosFavoritos.remove(produto);
+    }
 
     public void mostrarProdutosFavoritos() {
-
         for (ProdutoDigital produto : produtosFavoritos) {
             System.out.println(produto);
         }
