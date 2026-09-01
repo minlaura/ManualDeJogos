@@ -3,14 +3,16 @@ package manualdejogos.model;
 import manualdejogos.exception.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Loja {
 
     private String nome;
     private String cnpj;
 
-    private List<ProdutoDigital> catalogo = new ArrayList<>();
+    private Map<Integer, ProdutoDigital> catalogo = new HashMap<>();
     private List<Usuario> usuarios = new ArrayList<>();
 
     public Loja(String nome, String cnpj) {
@@ -27,7 +29,7 @@ public class Loja {
     }
 
     public void adicionarProduto(ProdutoDigital produto) {
-        catalogo.add(produto);
+        catalogo.put(produto.getId(), produto);
     }
 
     public void adicionarUsuario(Usuario usuario) {
@@ -38,27 +40,25 @@ public class Loja {
             throws ProdutoNaoEncontradoException {
 
         ProdutoDigital produto = buscarPorNome(nome);
-        catalogo.remove(produto);
+        catalogo.remove(produto.getId());
     }
 
     public ProdutoDigital buscarPorId(int id)
             throws ProdutoNaoEncontradoException {
 
-        for (ProdutoDigital produto : catalogo) {
+        ProdutoDigital produto = catalogo.get(id);
 
-            if (produto.getId() == id) {
-                return produto;
-            }
+        if (produto == null) {
+            throw new ProdutoNaoEncontradoException();
         }
 
-        throw new ProdutoNaoEncontradoException();
+        return produto;
     }
 
     public ProdutoDigital buscarPorNome(String nome)
             throws ProdutoNaoEncontradoException {
 
-        for (ProdutoDigital produto : catalogo) {
-
+        for (ProdutoDigital produto : catalogo.values()) {
             if (produto.getNome().equalsIgnoreCase(nome)) {
                 return produto;
             }
@@ -78,20 +78,16 @@ public class Loja {
     }
 
     public void mostrarCatalogo() {
-
-        for (ProdutoDigital produto : catalogo) {
+        for (ProdutoDigital produto : catalogo.values()) {
             System.out.println(produto);
         }
     }
 
     public List<ProdutoDigital> buscarPorGenero(Genero genero) {
-
         List<ProdutoDigital> produtosPorGenero = new ArrayList<>();
 
-        for (ProdutoDigital produto : catalogo) {
-
+        for (ProdutoDigital produto : catalogo.values()) {
             if (produto instanceof Jogo jogo) {
-
                 if (jogo.getGenero() == genero) {
                     produtosPorGenero.add(produto);
                 }
@@ -102,22 +98,17 @@ public class Loja {
     }
 
     public List<Jogo> buscarJogosMaiorIdade() {
-
         List<Jogo> jogosMaiorIdade = new ArrayList<>();
         int maiorIdade = -1;
 
-        for (ProdutoDigital produto : catalogo) {
-
+        for (ProdutoDigital produto : catalogo.values()) {
             if (produto instanceof Jogo jogo) {
-
                 if (jogo.getIdadeRecomendada() > maiorIdade) {
-
                     maiorIdade = jogo.getIdadeRecomendada();
                     jogosMaiorIdade.clear();
                     jogosMaiorIdade.add(jogo);
 
                 } else if (jogo.getIdadeRecomendada() == maiorIdade) {
-
                     jogosMaiorIdade.add(jogo);
                 }
             }
@@ -127,21 +118,17 @@ public class Loja {
     }
 
     public List<Jogo> buscarJogosBaratos() {
-
         double maiorLimite = 5;
         double menorLimite = 0;
 
         List<Jogo> jogosBaratos = new ArrayList<>();
 
-        for (ProdutoDigital produto : catalogo) {
-
+        for (ProdutoDigital produto : catalogo.values()) {
             if (produto instanceof Jogo jogo) {
 
                 double precoFinal = jogo.calcularPrecoFinal();
 
-                if (precoFinal > menorLimite
-                        && precoFinal <= maiorLimite) {
-
+                if (precoFinal > menorLimite && precoFinal <= maiorLimite) {
                     jogosBaratos.add(jogo);
                 }
             }
@@ -151,24 +138,20 @@ public class Loja {
     }
 
     public List<Jogo> buscarJogosMaisBaratos() {
-
         List<Jogo> jogosMaisBaratos = new ArrayList<>();
         double menorPreco = Double.MAX_VALUE;
 
-        for (ProdutoDigital produto : catalogo) {
-
+        for (ProdutoDigital produto : catalogo.values()) {
             if (produto instanceof Jogo jogo) {
 
                 double precoFinal = jogo.calcularPrecoFinal();
 
                 if (precoFinal < menorPreco) {
-
                     menorPreco = precoFinal;
                     jogosMaisBaratos.clear();
                     jogosMaisBaratos.add(jogo);
 
                 } else if (precoFinal == menorPreco) {
-
                     jogosMaisBaratos.add(jogo);
                 }
             }
@@ -176,18 +159,22 @@ public class Loja {
 
         return jogosMaisBaratos;
     }
-    public List<ProdutoDigital> buscarProdutoPorFaixaDePreco(double precoMinimo, double precoMaximo) {
+
+    public List<ProdutoDigital> buscarProdutoPorFaixaDePreco(
+            double precoMinimo,
+            double precoMaximo) {
 
         List<ProdutoDigital> produtoPorFaixa = new ArrayList<>();
 
-        for (ProdutoDigital produto : catalogo) {
+        for (ProdutoDigital produto : catalogo.values()) {
 
-                double precoFinal = produto.calcularPrecoFinal();
+            double precoFinal = produto.calcularPrecoFinal();
 
-                if (precoFinal >= precoMinimo && precoFinal <= precoMaximo) {
-                    produtoPorFaixa.add(produto);
-                }
+            if (precoFinal >= precoMinimo && precoFinal <= precoMaximo) {
+                produtoPorFaixa.add(produto);
             }
+        }
+
         return produtoPorFaixa;
     }
 }
