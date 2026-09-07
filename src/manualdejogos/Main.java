@@ -321,5 +321,8 @@ public class Main {
         testarFavoritos(loja, usuarioComum);
 
         testarFaixaDePreco(loja);
+
+        titulo("Catálogo - ID e Nome");
+        loja.mostrarCatalogoComId();
     }
 }

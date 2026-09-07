@@ -177,4 +177,12 @@ public class Loja {
 
         return produtoPorFaixa;
     }
+
+    public void mostrarCatalogoComId() {
+        for (Map.Entry<Integer, ProdutoDigital> entrada : catalogo.entrySet()) {
+            System.out.println(entrada.getKey() + " -> " + entrada.getValue().getNome());
+
+        }
+
+    }
 }
