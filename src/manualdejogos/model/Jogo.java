@@ -6,7 +6,7 @@ package manualdejogos.model;
  *
  *
  */
-public class Jogo extends ProdutoDigital {
+public class Jogo extends ProdutoDigital implements RestricaoEtaria {
     private int idadeRecomendada;
     private Genero genero;
     private boolean multiplayer;
@@ -21,7 +21,7 @@ public class Jogo extends ProdutoDigital {
 
 
     }
-
+ @Override
     public int getIdadeRecomendada() {
         return idadeRecomendada;
     }

@@ -82,8 +82,8 @@ public class Usuario {
             JogoBaseNaoEncontradoException,
             SaldoInsuficienteException {
 
-        if (produto instanceof Jogo jogo) {
-            if (idade < jogo.getIdadeRecomendada()) {
+        if (produto instanceof RestricaoEtaria restricaoEtaria) {
+            if (idade < restricaoEtaria.getIdadeRecomendada()) {
                 throw new IdadeInsuficienteException();
             }
         }
