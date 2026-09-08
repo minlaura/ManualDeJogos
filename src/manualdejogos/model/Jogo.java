@@ -6,11 +6,12 @@ package manualdejogos.model;
  *
  *
  */
-public class Jogo extends ProdutoDigital implements RestricaoEtaria {
+public class Jogo extends ProdutoDigital implements RestricaoEtaria, Avaliavel {
     private int idadeRecomendada;
     private Genero genero;
     private boolean multiplayer;
     private double taxaDesconto;
+    private int notaAvaliacao;
 
     public Jogo(String nome, double precoBase, int id, int idadeRecomendada, Genero genero, boolean multiplayer, double taxaDesconto) {
         super(nome, precoBase, id);
@@ -53,12 +54,26 @@ public class Jogo extends ProdutoDigital implements RestricaoEtaria {
     public void setTaxaDesconto(double taxaDesconto) {
         this.taxaDesconto = taxaDesconto;
     }
+    public int getnotaAvalicao(){
+        return notaAvaliacao;
+
+    }
 
     /**
      * Calcula o preço final aplicando a taxa de desconto definida para o próprio jogo.
      *
      * @return preço final do jogo
      */
+    @Override
+    public boolean avaliar(int nota){
+        if (nota >= 1 && nota <=5){
+            this.notaAvaliacao = nota;
+            return true;
+
+        }
+        return false;
+    }
+
     @Override
 
     public double calcularPrecoFinal() {
