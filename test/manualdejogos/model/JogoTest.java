@@ -15,14 +15,14 @@ public class JogoTest {
     }
 
     @Test
-    void deveAvaliarJogoUsandoInterface() {
-        Avaliavel avaliavel = jogo;
+    void deveAvaliarJogoComNotaValida() {
+        jogo.avaliar(4);
 
-        assertTrue(avaliavel.avaliar(4));
+        assertEquals(4, jogo.getNotaAvalicao());
     }
 
     @Test
-    void eveFalharComNotaInvalida() {
+    void deveFalharComNotaInvalida() {
 
         assertFalse(jogo.avaliar(10));
     }
