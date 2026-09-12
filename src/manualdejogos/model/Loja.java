@@ -124,9 +124,9 @@ public class Loja {
         return jogosMaiorIdade;
     }
 
-    public List<Jogo> buscarJogosBaratos() {
-        double maiorLimite = 5;
-        double menorLimite = 0;
+    public List<Jogo> buscarJogosBaratos(
+            double menorLimite,
+            double maiorLimite) {
 
         List<Jogo> jogosBaratos = new ArrayList<>();
 
@@ -135,7 +135,9 @@ public class Loja {
 
                 double precoFinal = jogo.calcularPrecoFinal();
 
-                if (precoFinal > menorLimite && precoFinal <= maiorLimite) {
+                if (precoFinal > menorLimite &&
+                        precoFinal <= maiorLimite) {
+
                     jogosBaratos.add(jogo);
                 }
             }
@@ -143,6 +145,8 @@ public class Loja {
 
         return jogosBaratos;
     }
+
+
 
     public List<Jogo> buscarJogosMaisBaratos() {
         List<Jogo> jogosMaisBaratos = new ArrayList<>();
