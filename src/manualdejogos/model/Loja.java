@@ -87,9 +87,16 @@ public class Loja {
         List<ProdutoDigital> produtosPorGenero = new ArrayList<>();
 
         for (ProdutoDigital produto : catalogo.values()) {
+
             if (produto instanceof Jogo jogo) {
                 if (jogo.getGenero() == genero) {
-                    produtosPorGenero.add(produto);
+                    produtosPorGenero.add(jogo);
+                }
+            }
+
+            if (produto instanceof DLC dlc) {
+                if (dlc.getJogoBase().getGenero() == genero) {
+                    produtosPorGenero.add(dlc);
                 }
             }
         }
