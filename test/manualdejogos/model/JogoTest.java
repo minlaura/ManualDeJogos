@@ -18,7 +18,7 @@ public class JogoTest {
     void deveAvaliarJogoComNotaValida() {
         jogo.avaliar(4);
 
-        assertEquals(4, jogo.getNotaAvalicao());
+        assertEquals(4, jogo.getNotaAvaliacao());
     }
 
     @Test

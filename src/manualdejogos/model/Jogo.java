@@ -54,7 +54,7 @@ public class Jogo extends ProdutoDigital implements RestricaoEtaria, Avaliavel {
     public void setTaxaDesconto(double taxaDesconto) {
         this.taxaDesconto = taxaDesconto;
     }
-    public int getNotaAvalicao(){
+    public int getNotaAvaliacao(){
         return notaAvaliacao;
 
     }
