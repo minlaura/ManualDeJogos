@@ -1,166 +1,169 @@
-# 🎮 Manual de Jogos
+# Manual de Jogos
 
-Sistema de gerenciamento de jogos digitais desenvolvido em **Java**, com foco na aplicação prática dos principais conceitos de **Programação Orientada a Objetos (POO)**.
+Sistema de gerenciamento de jogos digitais desenvolvido em Java como projeto de estudo de Programação Orientada a Objetos.
 
-O projeto simula uma plataforma de distribuição digital, permitindo o gerenciamento de usuários, jogos, DLCs, compras, biblioteca pessoal, favoritos e catálogo de produtos.
+A aplicação simula uma pequena plataforma de distribuição digital, permitindo trabalhar com jogos, DLCs, usuários, compras, biblioteca, favoritos e catálogo de produtos.
 
----
-
-## Sobre o projeto
-
-O **Manual de Jogos** foi desenvolvido como projeto de estudo para consolidar conceitos fundamentais da linguagem Java e da Programação Orientada a Objetos.
-
-A aplicação possui regras de negócio relacionadas à compra de produtos digitais, como:
-
-* classificação indicativa;
-* saldo disponível;
-* necessidade de possuir o jogo base para adquirir uma DLC;
-* busca e gerenciamento de produtos;
-* tratamento de situações inválidas através de exceções personalizadas.
-
-O projeto utiliza coleções Java para armazenar produtos, usuários, biblioteca e favoritos.
+O projeto é desenvolvido de forma incremental, adicionando novas funcionalidades conforme novos conceitos de Java são estudados.
 
 ---
 
 ## Funcionalidades
 
-### Usuários
+### Usuário
 
-* Cadastro de usuários
-* Alteração de nome
-* Adição de saldo
-* Compra de produtos digitais
-* Biblioteca pessoal
-* Verificação de produtos adquiridos
-* Favoritar produtos
-* Desfavoritar produtos
-* Exibição da biblioteca
-* Exibição dos produtos favoritos
+- Cadastro de usuários
+- Alteração de nome
+- Adição de saldo
+- Compra de produtos digitais
+- Biblioteca de produtos adquiridos
+- Verificação de produtos já comprados
+- Favoritar e desfavoritar produtos
+- Exibição da biblioteca
+- Exibição dos favoritos
 
 ### Produtos digitais
 
-O sistema trabalha com diferentes tipos de produtos através da classe abstrata `ProdutoDigital`.
+O sistema utiliza a classe abstrata `ProdutoDigital` como base para diferentes tipos de produtos.
 
-Atualmente estão implementados:
+Atualmente existem:
 
-* `Jogo`
-* `DLC`
+- `Jogo`
+- `DLC`
 
-Cada tipo possui atributos e regras específicas.
+Cada produto possui seu próprio cálculo de preço final.
+
+### Jogos
+
+Os jogos possuem:
+
+- classificação indicativa
+- gênero
+- suporte a multiplayer
+- taxa de desconto
+- avaliação de 1 a 5
+
+A interface `RestricaoEtaria` define o comportamento relacionado à classificação indicativa.
+
+A interface `Avaliavel` define o comportamento de avaliação dos jogos.
+
+### DLCs
+
+Uma DLC está associada a um `Jogo` base.
+
+Para comprar uma DLC, o usuário precisa possuir o jogo correspondente em sua biblioteca.
+
+O preço final da DLC também é calculado a partir das informações do jogo base.
 
 ### Loja
 
-* Cadastro de produtos
-* Remoção de produtos
-* Cadastro de usuários
-* Busca de produto por ID
-* Busca de produto por nome
-* Busca de jogos por gênero
-* Busca de produtos por faixa de preço
-* Realização de vendas
-* Gerenciamento do catálogo
+A classe `Loja` é responsável pelo gerenciamento do catálogo e das vendas.
+
+Entre as operações disponíveis estão:
+
+- adicionar produtos
+- remover produtos
+- cadastrar usuários
+- buscar produto por ID
+- buscar produto por nome
+- buscar produtos por gênero
+- incluir DLCs na busca utilizando o gênero do jogo base
+- buscar produtos por faixa de preço
+- buscar jogos por limite de preço
+- buscar os jogos de menor preço
+- buscar jogos com maior classificação indicativa
+- realizar vendas
+- exibir catálogo
+- exibir IDs e nomes dos produtos
 
 ---
 
 ## Regras de negócio
 
-* O usuário deve possuir saldo suficiente para realizar uma compra.
-* Jogos respeitam sua classificação indicativa.
-* DLCs exigem que o usuário possua o jogo base correspondente.
-* Produtos adquiridos são adicionados à biblioteca do usuário.
-* Situações inválidas são tratadas através de exceções específicas.
+Durante uma compra, algumas regras precisam ser respeitadas:
+
+- o usuário deve possuir saldo suficiente;
+- a classificação indicativa do produto deve ser respeitada;
+- uma DLC só pode ser comprada se o usuário possuir o jogo base;
+- após uma compra válida, o produto é adicionado à biblioteca;
+- situações inválidas são representadas por exceções específicas.
 
 ---
 
-## Conceitos aplicados
+## Collections utilizadas
 
-* Classes e objetos
-* Encapsulamento
-* Herança
-* Polimorfismo
-* Classes abstratas
-* Métodos abstratos
-* Sobrescrita de métodos
-* Enum
-* Associação entre objetos
-* Collections
-* `List`
-* `ArrayList`
-* `for-each`
-* Tratamento de exceções
-* Exceções personalizadas
-* `instanceof`
-* `toString`
-* Reutilização de código
-* Separação de responsabilidades
+O projeto utiliza diferentes estruturas do Java Collections Framework.
 
----
+### List
 
-## Estrutura do projeto
+Utilizada para:
 
-```text
-manualdejogos
-│
-├── model
-│   ├── ProdutoDigital.java
-│   ├── Jogo.java
-│   ├── DLC.java
-│   ├── Usuario.java
-│   ├── Loja.java
-│   └── Genero.java
-│
-├── exception
-│   ├── ProdutoNaoEncontradoException.java
-│   ├── SaldoInsuficienteException.java
-│   ├── IdadeInsuficienteException.java
-│   └── JogoBaseNaoEncontradoException.java
-│
-├── DadosIniciais.java
-│
-└── Main.java
+- biblioteca do usuário;
+- usuários cadastrados;
+- resultados de buscas.
+
+### Set
+
+Utilizado para armazenar produtos favoritos.
+
+Como `Set` não permite elementos duplicados, um mesmo produto não é adicionado várias vezes aos favoritos.
+
+### Map
+
+O catálogo da loja utiliza:
+
+```java
+Map<Integer, ProdutoDigital>
+```
+
+O ID do produto funciona como chave e o próprio produto como valor.
+
+Isso permite operações como:
+
+```java
+catalogo.put(produto.getId(), produto);
+catalogo.get(id);
+catalogo.remove(id);
+catalogo.values();
+catalogo.keySet();
+catalogo.entrySet();
 ```
 
 ---
 
-## Principais classes
+## Interfaces
 
-### `ProdutoDigital`
+### RestricaoEtaria
 
-Classe abstrata responsável pelos atributos e comportamentos comuns aos produtos digitais.
+Define que um produto com restrição de idade precisa informar sua classificação indicativa.
 
-É utilizada como classe base para `Jogo` e `DLC`.
+```java
+public interface RestricaoEtaria {
 
-### `Jogo`
+    int getIdadeRecomendada();
+}
+```
 
-Representa um jogo disponível na plataforma.
+A classe `Jogo` implementa essa interface.
 
-Possui informações como nome, preço, ID, idade recomendada, gênero, multiplayer e desconto.
+### Avaliavel
 
-### `DLC`
+Define o comportamento de objetos que podem receber uma avaliação.
 
-Representa um conteúdo adicional relacionado a um jogo existente.
+```java
+public interface Avaliavel {
 
-Mantém uma referência para o jogo base e possui regras específicas para sua compra.
+    boolean avaliar(int nota);
+}
+```
 
-### `Usuario`
-
-Responsável pelos dados e operações do usuário, incluindo saldo, biblioteca, compras e produtos favoritos.
-
-### `Loja`
-
-Responsável pelo gerenciamento do catálogo e dos usuários.
-
-Centraliza operações de busca, cadastro, remoção e venda de produtos.
-
-### `DadosIniciais`
-
-Responsável pela criação dos dados iniciais utilizados pela aplicação, evitando concentrar toda a configuração do sistema dentro da classe `Main`.
+Atualmente, `Jogo` implementa essa interface e aceita avaliações entre 1 e 5.
 
 ---
 
 ## Exceções personalizadas
 
-O projeto utiliza exceções próprias para representar situações relacionadas às regras de negócio:
+O projeto possui exceções próprias para representar falhas nas regras de negócio:
 
 ```text
 ProdutoNaoEncontradoException
@@ -169,51 +172,218 @@ IdadeInsuficienteException
 JogoBaseNaoEncontradoException
 ```
 
+Elas são utilizadas junto com:
+
+```java
+throw
+throws
+try
+catch
+```
+
 ---
 
-## Tecnologias utilizadas
+## Testes
 
-* Java
-* IntelliJ IDEA
-* Java Collections Framework
-* Git
-* GitHub
+O projeto utiliza JUnit 5 para testar as principais regras da aplicação.
+
+Atualmente existem testes para:
+
+- busca de produtos por ID;
+- produto inexistente;
+- busca por nome;
+- busca por gênero;
+- busca por faixa de preço;
+- remoção de produtos;
+- compras;
+- saldo insuficiente;
+- idade insuficiente;
+- biblioteca do usuário;
+- favoritos;
+- adição de saldo;
+- avaliações válidas e inválidas.
+
+Também são utilizados recursos como:
+
+```java
+@Test
+@BeforeEach
+
+assertEquals()
+assertTrue()
+assertFalse()
+assertThrows()
+```
+
+Os testes ficam separados da classe `Main`, permitindo que o `Main` seja utilizado apenas como demonstração do funcionamento da aplicação.
+
+---
+
+## Conceitos praticados
+
+Durante o desenvolvimento do projeto estão sendo aplicados conceitos como:
+
+- classes e objetos
+- encapsulamento
+- herança
+- polimorfismo
+- abstração
+- classes abstratas
+- métodos abstratos
+- interfaces
+- sobrescrita de métodos
+- `enum`
+- associação entre objetos
+- `List`
+- `Set`
+- `Map`
+- Generics em Collections
+- `for-each`
+- `instanceof`
+- pattern matching com `instanceof`
+- exceções personalizadas
+- `throw` e `throws`
+- `try` e `catch`
+- `toString`
+- JUnit
+- `@BeforeEach`
+- reutilização de código
+- separação de responsabilidades
+
+---
+
+## Estrutura do projeto
+
+```text
+ManualDeJogos
+│
+├── src
+│   └── manualdejogos
+│       │
+│       ├── exception
+│       │   ├── IdadeInsuficienteException.java
+│       │   ├── JogoBaseNaoEncontradoException.java
+│       │   ├── ProdutoNaoEncontradoException.java
+│       │   └── SaldoInsuficienteException.java
+│       │
+│       ├── model
+│       │   ├── Avaliavel.java
+│       │   ├── DLC.java
+│       │   ├── Genero.java
+│       │   ├── Jogo.java
+│       │   ├── Loja.java
+│       │   ├── ProdutoDigital.java
+│       │   ├── RestricaoEtaria.java
+│       │   └── Usuario.java
+│       │
+│       ├── DadosIniciais.java
+│       └── Main.java
+│
+└── test
+    └── manualdejogos
+        └── model
+            ├── JogoTest.java
+            ├── LojaTest.java
+            └── UsuarioTest.java
+```
+
+---
+
+## Principais classes
+
+### ProdutoDigital
+
+Classe abstrata que contém os dados e comportamentos comuns aos produtos da plataforma.
+
+`Jogo` e `DLC` herdam dessa classe.
+
+### Jogo
+
+Representa um jogo disponível no catálogo.
+
+Além dos dados herdados de `ProdutoDigital`, possui gênero, idade recomendada, multiplayer, desconto e avaliação.
+
+### DLC
+
+Representa um conteúdo adicional associado a um jogo base.
+
+Possui regras próprias para cálculo de preço e exige que o usuário tenha o jogo correspondente antes da compra.
+
+### Usuario
+
+Gerencia os dados do usuário, saldo, biblioteca e favoritos.
+
+Também é responsável pelas validações realizadas durante uma compra.
+
+### Loja
+
+Mantém o catálogo utilizando um `Map<Integer, ProdutoDigital>` e centraliza operações de cadastro, busca, remoção e venda.
+
+### DadosIniciais
+
+Responsável pela criação dos produtos e dados utilizados inicialmente pela aplicação.
+
+Isso evita concentrar a configuração do sistema dentro da classe `Main`.
+
+### Main
+
+Utilizada como demonstração simples do funcionamento da aplicação.
+
+As verificações das regras de negócio são realizadas principalmente pelos testes JUnit.
+
+---
+
+## Tecnologias
+
+- Java
+- JUnit 5
+- Java Collections Framework
+- IntelliJ IDEA
+- Git
+- GitHub
 
 ---
 
 ## Como executar
 
-1. Clone este repositório:
+Clone o repositório:
 
 ```bash
 git clone https://github.com/minlaura/ManualDeJogos.git
 ```
 
-2. Abra o projeto no IntelliJ IDEA ou em outra IDE compatível com Java.
+Abra o projeto no IntelliJ IDEA ou em outra IDE compatível com Java.
 
-3. Execute a classe:
+Execute:
 
 ```text
 Main.java
+```
+
+Os testes podem ser executados separadamente através das classes:
+
+```text
+JogoTest
+LojaTest
+UsuarioTest
 ```
 
 ---
 
 ## Próximos passos
 
-* Implementar testes automatizados com JUnit
-* Ampliar os testes das regras de negócio
-* Ordenar produtos por preço
-* Criar filtros adicionais para jogos e DLCs
-* Implementar histórico de compras
-* Adicionar persistência de dados
-* Melhorar a organização em pacotes
-* Futuramente integrar com banco de dados
+- ampliar a cobertura de testes;
+- adicionar novos filtros ao catálogo;
+- melhorar a organização dos pacotes;
+- continuar refatorando responsabilidades das classes;
+- implementar histórico de compras;
+- estudar persistência de dados;
+- futuramente integrar o projeto com banco de dados.
 
 ---
 
-## Objetivo de aprendizado
+## Objetivo
 
-O principal objetivo deste projeto é acompanhar minha evolução em Java através da construção gradual de uma aplicação orientada a objetos.
+Este projeto acompanha meu aprendizado em Java através da construção e evolução de uma aplicação real.
 
-Cada nova funcionalidade é utilizada para praticar e consolidar conceitos antes de avançar para tópicos mais complexos.
+A proposta é aplicar cada conceito estudado diretamente no código, revisar implementações anteriores e melhorar gradualmente a estrutura do projeto conforme novos conhecimentos são adquiridos.
