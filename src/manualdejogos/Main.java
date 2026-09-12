@@ -185,10 +185,10 @@ public class Main {
 
     private static void testarJogosBaratos(Loja loja) {
 
-        titulo("Jogos entre R$ 0,00 e R$ 5,00");
+        titulo("Jogos até R$ 5");
 
         List<Jogo> jogosAteCincoReais =
-                loja.buscarJogosBaratos();
+                loja.buscarJogosBaratos(0, 5);
 
         for (Jogo jogo : jogosAteCincoReais) {
             System.out.println(jogo);
