@@ -146,7 +146,10 @@ public class Loja {
         return jogosBaratos;
     }
 
-
+    public void alterarNomeProduto(int id, String novoNome) {
+        ProdutoDigital produto = buscarPorId(id);
+        produto.alterarNome(novoNome);
+    }
 
     public List<Jogo> buscarJogosMaisBaratos() {
         List<Jogo> jogosMaisBaratos = new ArrayList<>();

@@ -27,6 +27,11 @@ public abstract class ProdutoDigital {
         return nome;
     }
 
+    // LOJA
+    public void alterarNome(String novoNome) {
+        this.nome = novoNome;
+    }
+
     public double getPrecoBase() {
         return precoBase;
     }

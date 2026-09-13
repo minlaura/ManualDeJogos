@@ -68,6 +68,15 @@ public class LojaTest {
         assertTrue (produtosPorGenero.contains(produto));
     }
 
+    @Test
+    void deveAlterarNomeDoProduto() {
+        Jogo jogo = new Jogo("Nome Antigo", 10, 50, 10, Genero.AVENTURA, true, 10);
+        loja.adicionarProduto(jogo);
+        loja.alterarNomeProduto(50, "Novo Nome");
+        assertEquals("Novo Nome", jogo.getNome());
+
+    }
+
 
 
 }
