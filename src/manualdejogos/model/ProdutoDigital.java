@@ -41,7 +41,7 @@ public abstract class ProdutoDigital {
     }
 
     /**
-     * Cada classe derivada aplica sua própria regra de cálculo, considerando descontos/valores específicos.
+     * Cada classe derivada aplica a sua própria regra de cálculo, considerando descontos/valores específicos.
      *
      * @return  preço final de jogo
      */

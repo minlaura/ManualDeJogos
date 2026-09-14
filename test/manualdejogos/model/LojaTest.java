@@ -20,6 +20,18 @@ public class LojaTest {
         loja = DadosIniciais.criarLoja();
     }
 
+    private Jogo criarJogo(String nome, double preco, int id) {
+        return new Jogo(
+                nome,
+                preco,
+                id,
+                10,
+                Genero.AVENTURA,
+                true,
+                0
+        );
+    }
+
     @Test
     void deveBuscarProdutoPorId() {
         ProdutoDigital produtoPorId = loja.buscarPorId(1);
@@ -76,7 +88,6 @@ public class LojaTest {
         assertEquals("Novo Nome", jogo.getNome());
 
     }
-
 
 
 }

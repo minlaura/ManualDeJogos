@@ -178,18 +178,9 @@ public class Loja {
             double precoMinimo,
             double precoMaximo) {
 
-        List<ProdutoDigital> produtoPorFaixa = new ArrayList<>();
-
-        for (ProdutoDigital produto : catalogo.values()) {
-
-            double precoFinal = produto.calcularPrecoFinal();
-
-            if (precoFinal >= precoMinimo && precoFinal <= precoMaximo) {
-                produtoPorFaixa.add(produto);
-            }
-        }
-
-        return produtoPorFaixa;
+        return catalogo.values().stream()
+                .filter(produto -> produto.calcularPrecoFinal() >= precoMinimo && produto.calcularPrecoFinal() <= precoMaximo)
+                .toList();
     }
 
     public void mostrarCatalogoComId() {
