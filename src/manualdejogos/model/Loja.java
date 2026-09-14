@@ -124,27 +124,6 @@ public class Loja {
         return jogosMaiorIdade;
     }
 
-    public List<Jogo> buscarJogosBaratos(
-            double menorLimite,
-            double maiorLimite) {
-
-        List<Jogo> jogosBaratos = new ArrayList<>();
-
-        for (ProdutoDigital produto : catalogo.values()) {
-            if (produto instanceof Jogo jogo) {
-
-                double precoFinal = jogo.calcularPrecoFinal();
-
-                if (precoFinal > menorLimite &&
-                        precoFinal <= maiorLimite) {
-
-                    jogosBaratos.add(jogo);
-                }
-            }
-        }
-
-        return jogosBaratos;
-    }
 
     public void alterarNomeProduto(int id, String novoNome) {
         ProdutoDigital produto = buscarPorId(id);
