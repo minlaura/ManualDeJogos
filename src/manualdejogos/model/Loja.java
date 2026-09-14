@@ -84,38 +84,37 @@ public class Loja {
     }
 
     public List<ProdutoDigital> buscarPorGenero(Genero genero) {
-        List<ProdutoDigital> produtosPorGenero = new ArrayList<>();
 
-        for (ProdutoDigital produto : catalogo.values()) {
-
-            if (produto instanceof Jogo jogo) {
-                if (jogo.getGenero() == genero) {
-                    produtosPorGenero.add(jogo);
-                }
-            }
-
-            if (produto instanceof DLC dlc) {
-                if (dlc.getJogoBase().getGenero() == genero) {
-                    produtosPorGenero.add(dlc);
-                }
-            }
-        }
-
-        return produtosPorGenero;
+        return catalogo.values()
+                .stream()
+                .filter(produto ->
+                        (produto instanceof Jogo jogo
+                                && jogo.getGenero() == genero)
+                                ||
+                                (produto instanceof DLC dlc
+                                        && dlc.getJogoBase().getGenero() == genero)
+                )
+                .toList();
     }
 
     public List<Jogo> buscarJogosMaiorIdade() {
+
         List<Jogo> jogosMaiorIdade = new ArrayList<>();
         int maiorIdade = -1;
 
         for (ProdutoDigital produto : catalogo.values()) {
+
             if (produto instanceof Jogo jogo) {
+
                 if (jogo.getIdadeRecomendada() > maiorIdade) {
+
                     maiorIdade = jogo.getIdadeRecomendada();
+
                     jogosMaiorIdade.clear();
                     jogosMaiorIdade.add(jogo);
 
                 } else if (jogo.getIdadeRecomendada() == maiorIdade) {
+
                     jogosMaiorIdade.add(jogo);
                 }
             }
@@ -124,27 +123,33 @@ public class Loja {
         return jogosMaiorIdade;
     }
 
-
     public void alterarNomeProduto(int id, String novoNome) {
+
         ProdutoDigital produto = buscarPorId(id);
+
         produto.alterarNome(novoNome);
     }
 
     public List<Jogo> buscarJogosMaisBaratos() {
+
         List<Jogo> jogosMaisBaratos = new ArrayList<>();
         double menorPreco = Double.MAX_VALUE;
 
         for (ProdutoDigital produto : catalogo.values()) {
+
             if (produto instanceof Jogo jogo) {
 
                 double precoFinal = jogo.calcularPrecoFinal();
 
                 if (precoFinal < menorPreco) {
+
                     menorPreco = precoFinal;
+
                     jogosMaisBaratos.clear();
                     jogosMaisBaratos.add(jogo);
 
                 } else if (precoFinal == menorPreco) {
+
                     jogosMaisBaratos.add(jogo);
                 }
             }
@@ -157,16 +162,24 @@ public class Loja {
             double precoMinimo,
             double precoMaximo) {
 
-        return catalogo.values().stream()
-                .filter(produto -> produto.calcularPrecoFinal() >= precoMinimo && produto.calcularPrecoFinal() <= precoMaximo)
+        return catalogo.values()
+                .stream()
+                .filter(produto ->
+                        produto.calcularPrecoFinal() >= precoMinimo
+                                && produto.calcularPrecoFinal() <= precoMaximo
+                )
                 .toList();
     }
 
     public void mostrarCatalogoComId() {
+
         for (Map.Entry<Integer, ProdutoDigital> entrada : catalogo.entrySet()) {
-            System.out.println(entrada.getKey() + " -> " + entrada.getValue().getNome());
 
+            System.out.println(
+                    entrada.getKey()
+                            + " -> "
+                            + entrada.getValue().getNome()
+            );
         }
-
     }
 }
