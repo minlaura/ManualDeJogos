@@ -32,6 +32,22 @@ public class LojaTest {
         );
     }
 
+    private DLC criarDlc(
+            String nome,
+            double preco,
+            int id,
+            Jogo jogoBase,
+            double tamanhoGB) {
+
+        return new DLC(
+                nome,
+                preco,
+                id,
+                jogoBase,
+                tamanhoGB
+        );
+    }
+
     @Test
     void deveBuscarProdutoPorId() {
         ProdutoDigital produtoPorId = loja.buscarPorId(1);
@@ -71,13 +87,14 @@ public class LojaTest {
                 () -> loja.buscarPorNome("Minecraft")
         );
     }
+
     @Test
     void deveBuscarJogosPorGenero() {
-        List <ProdutoDigital> produtosPorGenero = loja.buscarPorGenero(Genero.AVENTURA);
+        List<ProdutoDigital> produtosPorGenero = loja.buscarPorGenero(Genero.AVENTURA);
         assertEquals(2, produtosPorGenero.size());
 
         ProdutoDigital produto = loja.buscarPorNome("Minecraft");
-        assertTrue (produtosPorGenero.contains(produto));
+        assertTrue(produtosPorGenero.contains(produto));
     }
 
     @Test
@@ -88,8 +105,56 @@ public class LojaTest {
         assertEquals("Novo Nome", jogo.getNome());
 
     }
+    @Test
+    void deveRetornarProdutoComMenorPreco(){
+        Loja lojaTeste = new Loja("Loja Teste", "123");
+
+        Jogo jogo = criarJogo("Jogo Teste", 50, 7);
+        Jogo jogoMaisBarato = criarJogo("MaisBarato", 20, 9);
+        lojaTeste.adicionarProduto(jogo);
+        lojaTeste.adicionarProduto(jogoMaisBarato);
+
+        List <ProdutoDigital> resultado = lojaTeste.buscarProdutosMaisBaratos();
+
+        assertEquals(1, resultado.size());
+        assertTrue(resultado.contains(jogoMaisBarato));
 
 
+
+    }
+
+    @Test
+    void deveRetornarJogoEDlcEmpatadosNoMenorPreco() {
+
+        Loja lojaTeste = new Loja("Loja Teste", "123");
+
+        Jogo jogo = criarJogo("Jogo Teste", 50, 7);
+
+        DLC dlc = criarDlc(
+                "DLC Teste", 50, 2, jogo, 5
+        );
+
+        lojaTeste.adicionarProduto(jogo);
+        lojaTeste.adicionarProduto(dlc);
+
+        List<ProdutoDigital> resultado =
+                lojaTeste.buscarProdutosMaisBaratos();
+
+        assertEquals(2, resultado.size());
+        assertTrue(resultado.contains(jogo));
+        assertTrue(resultado.contains(dlc));
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoCatalogoEstiverVazio() {
+
+        Loja lojaTeste = new Loja("Loja Teste", "123");
+
+        assertThrows(
+                ProdutoNaoEncontradoException.class,
+                () -> lojaTeste.buscarProdutosMaisBaratos()
+        );
+    }
 }
 
 

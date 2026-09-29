@@ -2,10 +2,7 @@ package manualdejogos.model;
 
 import manualdejogos.exception.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Loja {
 
@@ -130,33 +127,24 @@ public class Loja {
         produto.alterarNome(novoNome);
     }
 
-    public List<Jogo> buscarJogosMaisBaratos() {
 
-        List<Jogo> jogosMaisBaratos = new ArrayList<>();
-        double menorPreco = Double.MAX_VALUE;
+    public List<ProdutoDigital> buscarProdutosMaisBaratos() {
 
-        for (ProdutoDigital produto : catalogo.values()) {
+        ProdutoDigital produto = catalogo.values().stream()
+                .min(Comparator.comparingDouble(
+                        p -> p.calcularPrecoFinal()
+                ))
+                .orElseThrow(
+                        () -> new ProdutoNaoEncontradoException()
+                );
 
-            if (produto instanceof Jogo jogo) {
+        double menorPreco = produto.calcularPrecoFinal();
 
-                double precoFinal = jogo.calcularPrecoFinal();
-
-                if (precoFinal < menorPreco) {
-
-                    menorPreco = precoFinal;
-
-                    jogosMaisBaratos.clear();
-                    jogosMaisBaratos.add(jogo);
-
-                } else if (precoFinal == menorPreco) {
-
-                    jogosMaisBaratos.add(jogo);
-                }
-            }
-        }
-
-        return jogosMaisBaratos;
+        return catalogo.values().stream()
+                .filter(p -> p.calcularPrecoFinal() == menorPreco)
+                .toList();
     }
+
 
     public List<ProdutoDigital> buscarProdutoPorFaixaDePreco(
             double precoMinimo,
