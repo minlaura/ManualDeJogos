@@ -3,7 +3,7 @@ package manualdejogos.model;
 /**
  * Além das informações herdades de ProdutoDigital,
  * possui classificação de indicativa, gênero e +.
- *
+ * // teste
  *
  */
 public class Jogo extends ProdutoDigital implements RestricaoEtaria, Avaliavel {
