@@ -94,23 +94,48 @@ public class Usuario {
     }
 
     /**
-     * Realiza a compra de um único produto digital.
+     * Calcula o valor total de uma lista de produtos.
+     */
+    private double calcularTotal(List<ProdutoDigital> produtos) {
+
+        return produtos.stream()
+                .map(produto -> produto.calcularPrecoFinal())
+                .reduce(0.0, (soma, valor) -> soma + valor);
+    }
+
+    /**
+     * Centraliza a lógica de compra.
+     */
+    private void realizarCompra(List<ProdutoDigital> produtos)
+            throws SaldoInsuficienteException,
+            IdadeInsuficienteException,
+            JogoBaseNaoEncontradoException {
+
+        // Primeiro valida todos os produtos.
+        for (ProdutoDigital produto : produtos) {
+            validarProdutoParaCompra(produto, produtos);
+        }
+
+        double total = calcularTotal(produtos);
+
+        if (saldo < total) {
+            throw new SaldoInsuficienteException();
+        }
+
+        // Só altera o usuário depois que todas as validações passaram.
+        saldo -= total;
+        biblioteca.addAll(produtos);
+    }
+
+    /**
+     * Realiza a compra de um único produto.
      */
     public void comprar(ProdutoDigital produto)
             throws IdadeInsuficienteException,
             JogoBaseNaoEncontradoException,
             SaldoInsuficienteException {
 
-        validarProdutoParaCompra(produto, List.of());
-
-        double precoFinal = produto.calcularPrecoFinal();
-
-        if (saldo < precoFinal) {
-            throw new SaldoInsuficienteException();
-        }
-
-        saldo -= precoFinal;
-        biblioteca.add(produto);
+        realizarCompra(List.of(produto));
     }
 
     public void mostrarBiblioteca() {
@@ -148,12 +173,7 @@ public class Usuario {
     }
 
     public double calcularTotalDoCarrinho() {
-
-        double total = carrinho.stream()
-                .map(produto -> produto.calcularPrecoFinal())
-                .reduce(0.0, (soma, valor) -> soma + valor);
-
-        return total;
+        return calcularTotal(carrinho);
     }
 
     public void finalizarCompra()
@@ -161,18 +181,7 @@ public class Usuario {
             IdadeInsuficienteException,
             JogoBaseNaoEncontradoException {
 
-        for (ProdutoDigital produto : carrinho) {
-            validarProdutoParaCompra(produto, carrinho);
-        }
-
-        double total = calcularTotalDoCarrinho();
-
-        if (saldo < total) {
-            throw new SaldoInsuficienteException();
-        }
-        // Só altera o usuário depois que todas as validações passaram.
-        saldo -= total;
-        biblioteca.addAll(carrinho);
+        realizarCompra(carrinho);
         carrinho.clear();
     }
 
