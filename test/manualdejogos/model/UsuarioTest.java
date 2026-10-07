@@ -180,7 +180,19 @@ public class UsuarioTest {
         assertFalse(usuario1.possuiProduto(jogo2));
 
     }
+    @Test
+    void deveFalharAoFinalizarCarrinhoSemJogoBase() {
+        Usuario usuario1 = new Usuario("User Teste", 20, 500);
+        ProdutoDigital dlc = loja.buscarPorNome("Phantom Liberty");
+        usuario1.adicionarProdutoAoCarrinho(dlc);
+
+        assertThrows(JogoBaseNaoEncontradoException.class,
+                () -> usuario1.finalizarCompra());
+
+        assertFalse(usuario1.possuiProduto(dlc));
+        assertEquals(500.0, usuario1.getSaldo());
 
 
+    }
 }
 
