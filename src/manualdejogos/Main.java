@@ -34,25 +34,6 @@ public class Main {
         System.out.println(usuario);
 
 
-        titulo("COMPRA DE JOGO");
-
-        try {
-            loja.vender(usuario, 2);
-            System.out.println("Jogo comprado com sucesso!");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-
-        titulo("COMPRA DE DLC");
-
-        try {
-            loja.vender(usuario, 3);
-            System.out.println("DLC comprada com sucesso!");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
 
         titulo("BIBLIOTECA");
         usuario.mostrarBiblioteca();

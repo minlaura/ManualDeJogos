@@ -127,16 +127,6 @@ public class Usuario {
         biblioteca.addAll(produtos);
     }
 
-    /**
-     * Realiza a compra de um único produto.
-     */
-    public void comprar(ProdutoDigital produto)
-            throws IdadeInsuficienteException,
-            JogoBaseNaoEncontradoException,
-            SaldoInsuficienteException {
-
-        realizarCompra(List.of(produto));
-    }
 
     public void mostrarBiblioteca() {
         for (ProdutoDigital produto : biblioteca) {

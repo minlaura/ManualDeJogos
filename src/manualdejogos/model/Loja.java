@@ -64,15 +64,6 @@ public class Loja {
         throw new ProdutoNaoEncontradoException();
     }
 
-    public void vender(Usuario usuario, int id)
-            throws SaldoInsuficienteException,
-            IdadeInsuficienteException,
-            JogoBaseNaoEncontradoException,
-            ProdutoNaoEncontradoException {
-
-        ProdutoDigital produto = buscarPorId(id);
-        usuario.comprar(produto);
-    }
 
     public void mostrarCatalogo() {
         for (ProdutoDigital produto : catalogo.values()) {
