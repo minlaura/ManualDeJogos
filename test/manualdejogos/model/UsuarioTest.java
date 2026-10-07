@@ -208,6 +208,20 @@ public class UsuarioTest {
         assertTrue(usuario1.possuiProduto(dlcDoJogo1));
 
     }
+    @Test
+    void deveEsvaziarCarrinhoAposFinalizarCompra() throws SaldoInsuficienteException, IdadeInsuficienteException, JogoBaseNaoEncontradoException {
+        Usuario usuario1 = new Usuario("User Teste", 18, 500);
+        ProdutoDigital jogo1 = loja.buscarPorNome("Minecraft");
+        ProdutoDigital jogo2 = loja.buscarPorNome("Cyberpunk 2077");
+        usuario1.adicionarProdutoAoCarrinho(jogo1);
+        usuario1.adicionarProdutoAoCarrinho(jogo2);
+        usuario1.finalizarCompra();
+
+        assertTrue(usuario1.carrinhoEstaVazio());
+
+
+
+    }
 
 
 }

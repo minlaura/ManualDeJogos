@@ -135,6 +135,10 @@ public class Usuario {
 
     // CARRINHO DE COMPRAS
 
+    public boolean carrinhoEstaVazio() {
+        return carrinho.isEmpty();
+    }
+
     public void adicionarProdutoAoCarrinho(ProdutoDigital produto) {
         carrinho.add(produto);
     }
