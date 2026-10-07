@@ -139,6 +139,22 @@ public class UsuarioTest {
         assertEquals(230, total);
     }
 
+    @Test
+    void deveFinalizarCompraDoCarrinho() throws SaldoInsuficienteException, IdadeInsuficienteException, JogoBaseNaoEncontradoException {
+        Usuario usuario1 = new Usuario("User Teste", 18, 500);
+        ProdutoDigital jogo1 = loja.buscarPorNome("Minecraft");
+        ProdutoDigital jogo2 = loja.buscarPorNome("Cyberpunk 2077");
+        usuario1.adicionarProdutoAoCarrinho(jogo1);
+        usuario1.adicionarProdutoAoCarrinho(jogo2);
+        usuario1.finalizarCompra();
+
+        assertEquals(270, usuario1.getSaldo());
+        assertTrue(usuario1.possuiProduto(jogo1));
+        assertTrue(usuario1.possuiProduto(jogo2));
+
+
+    }
+
 
 }
 
