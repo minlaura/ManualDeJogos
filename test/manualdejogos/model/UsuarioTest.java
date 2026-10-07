@@ -194,5 +194,21 @@ public class UsuarioTest {
 
 
     }
+    @Test
+    void devePermitirDlcQuandoJogoBaseEstiverNoCarrinho() throws SaldoInsuficienteException, IdadeInsuficienteException, JogoBaseNaoEncontradoException {
+        Usuario usuario1 = new Usuario("User Teste", 20, 500);
+        ProdutoDigital jogo1 = loja.buscarPorNome("Cyberpunk 2077");
+        ProdutoDigital dlcDoJogo1 = loja.buscarPorNome("Phantom Liberty");
+        usuario1.adicionarProdutoAoCarrinho(jogo1);
+        usuario1.adicionarProdutoAoCarrinho(dlcDoJogo1);
+        usuario1.finalizarCompra();
+
+        assertEquals(288.75, usuario1.getSaldo());
+        assertTrue(usuario1.possuiProduto(jogo1));
+        assertTrue(usuario1.possuiProduto(dlcDoJogo1));
+
+    }
+
+
 }
 
