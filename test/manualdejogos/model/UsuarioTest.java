@@ -125,6 +125,20 @@ public class UsuarioTest {
         );
 
     }
+    @Test
+    void deveCalcularTotalDoCarrinho() {
+
+      Usuario usuario1 = new Usuario("User Teste", 18, 500);
+        ProdutoDigital jogo1 = loja.buscarPorNome("Minecraft");
+        ProdutoDigital jogo2 = loja.buscarPorNome("Cyberpunk 2077");
+        usuario1.adicionarProdutoAoCarrinho(jogo1);
+        usuario1.adicionarProdutoAoCarrinho(jogo2);
+
+        double total = usuario1.calcularTotalDoCarrinho();
+
+        assertEquals(230, total);
+    }
+
 
 }
 
