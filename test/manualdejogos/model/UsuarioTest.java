@@ -154,4 +154,13 @@ public class UsuarioTest {
                 () -> assertFalse(usuarioMaisNovo.possuiProduto(jogo1))
         );
     }
+    @Test
+    void deveRemoverProdutosDoCarrinho (){
+        Usuario usuario1 = new Usuario("User Teste", 10, 500);
+        ProdutoDigital jogo1 = loja.buscarPorNome("Minecraft");
+        usuario1.adicionarProdutoAoCarrinho(jogo1);
+        usuario1.removerProdutoDoCarrinho(jogo1);
+
+        assertTrue(usuario1.carrinhoEstaVazio());
+    }
 }
