@@ -154,13 +154,38 @@ public class UsuarioTest {
                 () -> assertFalse(usuarioMaisNovo.possuiProduto(jogo1))
         );
     }
+
     @Test
-    void deveRemoverProdutosDoCarrinho (){
+    void deveRemoverProdutoDoCarrinho() {
         Usuario usuario1 = new Usuario("User Teste", 10, 500);
         ProdutoDigital jogo1 = loja.buscarPorNome("Minecraft");
         usuario1.adicionarProdutoAoCarrinho(jogo1);
         usuario1.removerProdutoDoCarrinho(jogo1);
 
         assertTrue(usuario1.carrinhoEstaVazio());
+    }
+
+    @Test
+    void devePermitirDlcQuandoUsuarioJaPossuiJogoBase()
+            throws SaldoInsuficienteException,
+            IdadeInsuficienteException,
+            JogoBaseNaoEncontradoException {
+
+        Usuario usuario1 = new Usuario("User Teste", 18, 500);
+
+        ProdutoDigital jogoBase = loja.buscarPorNome("Cyberpunk 2077");
+        ProdutoDigital dlcJogoBase = loja.buscarPorNome("Phantom Liberty");
+
+        usuario1.adicionarProdutoAoCarrinho(jogoBase);
+        usuario1.finalizarCompra();
+
+        assertTrue(usuario1.possuiProduto(jogoBase));
+        assertEquals(350.0, usuario1.getSaldo());
+
+        usuario1.adicionarProdutoAoCarrinho(dlcJogoBase);
+        usuario1.finalizarCompra();
+
+        assertTrue(usuario1.possuiProduto(dlcJogoBase));
+        assertEquals(288.75, usuario1.getSaldo());
     }
 }
